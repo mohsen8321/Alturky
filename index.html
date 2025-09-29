@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مكتب محمد التركي للمحاماة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Cairo', sans-serif;
+      }
+
+      /* --- Professional Features Section Redesign --- */
+
+      .feature-card {
+        background-color: rgba(30, 41, 59, 0.5); /* slate-800 with 50% opacity */
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      }
+      
+      .feature-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 0 25px rgba(16, 185, 129, 0.4), 0 0 10px rgba(16, 185, 129, 0.3);
+        border-color: rgba(16, 185, 129, 0.5);
+      }
+
+      /* --- Continuous Icon Animations --- */
+      
+      /* Icon 1: Customized Journey (Compass) */
+      .compass-needle {
+        transform-origin: center;
+        animation: continuous-compass 4s ease-in-out infinite alternate;
+      }
+      .feature-card:hover .compass-needle {
+        animation-duration: 1s; /* Speed up on hover */
+      }
+      @keyframes continuous-compass {
+        from { transform: rotate(-6deg); }
+        to { transform: rotate(6deg); }
+      }
+
+      /* Icon 2: Clear Guidance (Scales of Justice) */
+      .scale-beam-group {
+        transform-origin: 32px 12px; /* Center X, Top of beam Y */
+        animation: continuous-scales 3s ease-in-out infinite alternate;
+      }
+       .feature-card:hover .scale-beam-group {
+        animation-duration: 1.2s;
+      }
+      @keyframes continuous-scales {
+        from { transform: rotate(-2.5deg); }
+        to { transform: rotate(2.5deg); }
+      }
+      
+      /* Icon 3: Track Progress (Bar Chart) */
+      .bar-chart-continuous .bar {
+        transform-origin: bottom;
+        animation-name: continuous-bars;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+      }
+      .bar-chart-continuous .bar-1 { animation-duration: 2.2s; animation-delay: 0s; }
+      .bar-chart-continuous .bar-2 { animation-duration: 2.5s; animation-delay: 0.2s; }
+      .bar-chart-continuous .bar-3 { animation-duration: 2s; animation-delay: 0.1s; }
+
+      @keyframes continuous-bars {
+        from { transform: scaleY(0.6); }
+        to { transform: scaleY(0.8); }
+      }
+      
+      .feature-card:hover .bar {
+         animation-name: hover-bars;
+         animation-duration: 0.5s;
+         animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+         animation-direction: normal;
+         animation-fill-mode: forwards;
+      }
+      .feature-card:hover .bar-2 { animation-delay: 0.1s; }
+      .feature-card:hover .bar-3 { animation-delay: 0.2s; }
+
+      @keyframes hover-bars {
+        from { transform: scaleY(0.6); }
+        to { transform: scaleY(1); }
+      }
+
+      /* --- Auth Modal Redesign --- */
+      @keyframes modal-fade-in {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+      }
+
+      .auth-modal-panel {
+        background-color: rgba(15, 23, 42, 0.8); /* slate-900 at 80% opacity */
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        animation: modal-fade-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      
+      .auth-modal-input {
+        background-color: rgba(30, 41, 59, 0.5); /* slate-800 at 50% */
+        border: 1px solid #475569; /* slate-600 */
+        color: #f1f5f9; /* slate-100 */
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+      .auth-modal-input:focus {
+        outline: none;
+        border-color: #10b981; /* emerald-500 */
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+      }
+      
+      /* --- Auth Modal Toggle Switch --- */
+      .auth-toggle-container {
+        display: flex;
+        position: relative;
+        background-color: rgba(30, 41, 59, 0.5); /* slate-800 50% */
+        border-radius: 9999px;
+        padding: 4px;
+        width: 100%;
+      }
+
+      .auth-toggle-slider {
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        width: calc(50% - 4px);
+        background-color: #10b981; /* emerald-500 */
+        border-radius: 9999px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+      }
+
+      .auth-toggle-container[data-mode="login"] .auth-toggle-slider {
+        transform: translateX(-100%);
+      }
+
+      .auth-toggle-button {
+        flex: 1;
+        padding: 8px 16px;
+        background-color: transparent;
+        border: none;
+        color: #94a3b8; /* slate-400 */
+        font-weight: 600;
+        cursor: pointer;
+        z-index: 10;
+        transition: color 0.3s;
+      }
+
+      .auth-toggle-button.active {
+        color: white;
+      }
+      
+      .custom-checkbox {
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: transparent;
+        border: 2px solid #64748b; /* slate-500 */
+        border-radius: 0.25rem;
+        width: 1rem;
+        height: 1rem;
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .custom-checkbox:checked {
+        background-color: #10b981; /* emerald-500 */
+        border-color: #059669; /* emerald-600 */
+      }
+      .custom-checkbox:checked::after {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 1px;
+        width: 4px;
+        height: 8px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      /* --- Onboarding Page Redesign --- */
+      .onboarding-panel {
+        background-color: rgba(15, 23, 42, 0.8); /* slate-900 at 80% opacity */
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #e2e8f0; /* slate-200 */
+      }
+      
+      .onboarding-stepper {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: 2rem;
+      }
+      .onboarding-stepper::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #475569; /* slate-600 */
+        transform: translateY(-50%);
+        z-index: 1;
+      }
+      .onboarding-stepper-progress {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        height: 2px;
+        background-color: #10b981; /* emerald-500 */
+        transform: translateY(-50%);
+        z-index: 2;
+        transition: width 0.5s ease-in-out;
+      }
+      .onboarding-step {
+        position: relative;
+        z-index: 3;
+        width: 32px;
+        height: 32px;
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        transition: all 0.4s ease-in-out;
+        background-color: #334155; /* slate-700 */
+        border: 2px solid #475569; /* slate-600 */
+        color: #94a3b8; /* slate-400 */
+      }
+      .onboarding-step.active {
+        background-color: #10b981; /* emerald-500 */
+        border-color: #34d399; /* emerald-400 */
+        color: white;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+      }
+       .onboarding-step.completed {
+        background-color: #059669; /* emerald-600 */
+        border-color: #10b981; /* emerald-500 */
+        color: white;
+      }
+
+      .onboarding-choice-btn {
+        background-color: rgba(30, 41, 59, 0.5); /* slate-800 50% */
+        border: 1px solid #475569; /* slate-600 */
+        transition: all 0.3s ease;
+      }
+      .onboarding-choice-btn:hover {
+        background-color: rgba(51, 65, 85, 0.7); /* slate-700 70% */
+        border-color: #64748b; /* slate-500 */
+      }
+      .onboarding-choice-btn.selected {
+        background-color: rgba(16, 185, 129, 0.15);
+        border-color: #10b981; /* emerald-500 */
+        color: #f0fdf4; /* emerald-50 */
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+        transform: translateY(-2px);
+      }
+
+      @keyframes onboarding-fade-in {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .onboarding-step-content {
+        animation: onboarding-fade-in 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+
+      /* Custom Range Slider */
+      .custom-range {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 6px;
+        background: #334155; /* slate-700 */
+        border-radius: 5px;
+        outline: none;
+      }
+      .custom-range::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #10b981; /* emerald-500 */
+        cursor: pointer;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
+        transition: transform 0.2s;
+      }
+      .custom-range:hover::-webkit-slider-thumb {
+        transform: scale(1.1);
+      }
+      .custom-range::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        background: #10b981;
+        cursor: pointer;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
+      }
+
+      /* --- Journey Page Redesign --- */
+      .journey-card {
+        background-color: rgba(30, 41, 59, 0.6); /* slate-800 with 60% opacity */
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      }
+      .journey-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+      }
+
+      /* --- Universal Glass Card Style --- */
+       .glass-card {
+        background-color: rgba(30, 41, 59, 0.6); /* slate-800 with 60% opacity */
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+      }
+      .glass-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 0 25px rgba(16, 185, 129, 0.3);
+        border-color: rgba(16, 185, 129, 0.4);
+      }
+      .dark-input {
+        background-color: rgba(30, 41, 59, 0.5); /* slate-800 at 50% */
+        border: 1px solid #475569; /* slate-600 */
+        color: #f1f5f9; /* slate-100 */
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+      .dark-input:focus, .dark-input:focus-within {
+        outline: none;
+        border-color: #10b981; /* emerald-500 */
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+      }
+      select.dark-input {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: left 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-left: 2.5rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
+
+      /* --- About Us Page: Professional Redesign --- */
+      .practice-area-details-container {
+        position: relative;
+        overflow: hidden;
+      }
+      .practice-area-details-bg {
+        position: absolute;
+        inset: 0;
+        border-radius: 0.5rem; /* match parent */
+        background-image: linear-gradient(45deg, rgba(16, 185, 129, 0.07) 25%, transparent 25%), 
+                          linear-gradient(-45deg, rgba(16, 185, 129, 0.07) 25%, transparent 25%);
+        background-size: 30px 30px;
+        background-position: 0 0;
+        animation: move-grid 30s linear infinite;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+      .practice-area-details-container:hover .practice-area-details-bg {
+        opacity: 1;
+      }
+      @keyframes move-grid {
+        from { background-position: 0 0; }
+        to { background-position: 60px 60px; }
+      }
+      
+      .practice-area-content {
+        animation: fadeInContent 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+      }
+      @keyframes fadeInContent {
+          from { opacity: 0; transform: translateY(15px) scale(0.98); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .practice-area-icon {
+        transform: scale(0);
+        animation: iconPopIn 0.7s cubic-bezier(0.25, 1, 0.5, 1) 0.1s forwards;
+      }
+       @keyframes iconPopIn {
+        from { transform: scale(0) rotate(-45deg); opacity: 0; }
+        to { transform: scale(1) rotate(0deg); opacity: 1; }
+      }
+
+      /* Client Cards Animation */
+      .client-card {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      .client-card.animate-fade-in-up {
+          animation: fade-in-up 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      }
+      @keyframes fade-in-up {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+
+      .client-card-interactive {
+        position: relative;
+        overflow: hidden;
+      }
+      .client-card-interactive::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        border-radius: inherit;
+        padding: 1px; /* border width */
+        background: conic-gradient(from 180deg at 50% 50%, rgba(255, 255, 255, 0) 0deg, #10b981 120deg, rgba(255, 255, 255, 0) 1turn);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+                mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out;
+        animation: rotate-glow 4s linear infinite;
+        animation-play-state: paused;
+      }
+      .client-card-interactive:hover::before {
+        opacity: 1;
+        animation-play-state: running;
+      }
+      @keyframes rotate-glow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      /* --- Custom Select Dropdown --- */
+      @keyframes dropdown-fade-in-scale {
+          from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+          to { opacity: 1; transform: scale(1) translateY(0); }
+      }
+      .custom-select-panel {
+        transform-origin: top;
+        animation: dropdown-fade-in-scale 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      .custom-select-option:hover {
+        background-color: rgba(16, 185, 129, 0.15);
+      }
+      .custom-select-option.selected {
+        background-color: rgba(16, 185, 129, 0.25);
+        color: #a7f3d0; /* emerald-200 */
+        font-weight: 600;
+      }
+
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.20.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
