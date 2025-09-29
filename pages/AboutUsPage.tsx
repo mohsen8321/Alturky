@@ -4,7 +4,7 @@ import { TeamMember, PracticeArea } from '../types';
 
 const TeamMemberCard: React.FC<{ member: TeamMember }> = ({ member }) => (
   <div className="glass-card rounded-xl overflow-hidden text-center h-full">
-    <img src={member.imageUrl} alt={`صورة ${member.name}`} className="w-full h-80 object-cover object-top" />
+    <img src={member.imageUrl} alt={`صورة ${member.name}`} className="w-full h-80 object-contain object-center bg-slate-800/50" />
     <div className="p-6">
       <h3 className="text-xl font-bold text-slate-100">{member.name}</h3>
       <p className="text-emerald-400 font-semibold mt-1">{member.title}</p>

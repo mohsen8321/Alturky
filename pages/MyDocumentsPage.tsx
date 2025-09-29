@@ -55,7 +55,8 @@ const MyDocumentsPage: React.FC = () => {
             <div key={serviceName} className="glass-card rounded-xl overflow-hidden">
               <h2 className="px-6 py-4 text-xl font-bold text-slate-100 border-b border-slate-700/50 bg-slate-800/40">{serviceName}</h2>
               <ul className="divide-y divide-slate-700/50">
-                {docs.map(doc => (
+                {/* FIX: Cast `docs` to `UserDocument[]` to resolve TypeScript error where `docs` was inferred as `unknown`. */}
+                {(docs as UserDocument[]).map(doc => (
                   <li key={doc.file.name + doc.uploadedAt} className="px-6 py-4 flex items-center justify-between hover:bg-slate-800/40 transition-colors">
                     <div className="flex items-center space-i-4">
                       <FileIcon fileType={doc.file.type} />

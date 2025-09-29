@@ -24,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick }) => {
         <div className="flex items-center justify-between h-24">
           <div className="flex items-center">
             <Link to={isAuthenticated ? "/journey" : "/"} className="flex-shrink-0 flex items-center space-i-4">
-                <AlTurkiLawLogo className="h-16 w-auto" />
+                <AlTurkiLawLogo className="h-20 w-auto" />
             </Link>
           </div>
 
