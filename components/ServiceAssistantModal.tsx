@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Service } from '../types';
 import { investorGuideText, alTurkiLawFirmInfoText } from '../services/investor_guide';
 
@@ -58,7 +58,7 @@ const ServiceAssistantModal: React.FC<ServiceAssistantModalProps> = ({ isOpen, o
     setError(null);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
+      const ai = new GoogleGenerativeAI(process.env.API_KEY!);
       
       const systemInstruction = `أنت مساعد معرفي لموقع رسمي. وظيفتك هي الاعتماد على الملفات المرفوعة فقط (سياسات، أدلة، عقود، لوائح، عروض، جداول…) للبحث والإجابة.
 ممنوع منعًا باتًا تعديل أو تحديث أي محتوى في الموقع أو الاستنتاج من خارج هذه الملفات.
@@ -125,15 +125,18 @@ const ServiceAssistantModal: React.FC<ServiceAssistantModalProps> = ({ isOpen, o
         الرجاء تقديم إجابة بناءً على التعليمات والوثائق المرجعية.
       `;
       
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: userContent,
-        config: {
-            systemInstruction: systemInstruction
-        }
-      });
+      //const model = ai.getGenerativeModel({ model: "gemini-1.5-flash-latest", systemInstruction });
+      //const model = ai.getGenerativeModel({ model: "gemini-2.5-pro", systemInstruction });
+      const model = ai.getGenerativeModel({ model: "gemini-2.5-flash", systemInstruction });
 
-      const modelResponse: ChatMessage = { role: 'model', text: response.text };
+      const chat = model.startChat();
+
+      const result = await chat.sendMessage(userContent);
+      const response = result.response;
+      const text = response.text();
+
+
+      const modelResponse: ChatMessage = { role: 'model', text: text };
       setChatHistory(prev => [...prev, modelResponse]);
 
     } catch (err) {
