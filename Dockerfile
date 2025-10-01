@@ -2,6 +2,11 @@
 # Use an official Node.js runtime as a parent image
 FROM node:18-alpine as builder
 
+# This is the fix: Tell Docker to expect a build-time argument
+ARG VITE_GEMINI_API_KEY
+# And make it available as an environment variable for the build command
+ENV VITE_GEMINI_API_KEY=$VITE_GEMINI_API_KEY
+
 # Set the working directory
 WORKDIR /app
 
