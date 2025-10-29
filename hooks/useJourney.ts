@@ -1,19 +1,28 @@
 import { useMemo } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { journeySteps } from '../services/data';
+import { getJourneySteps, getExistingInvestorJourneySteps } from '../services/data';
 import { JourneyStep } from '../types';
+import { useLanguage } from './useLanguage';
 
 export const useJourney = () => {
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   const journey: JourneyStep[] = useMemo(() => {
     if (!user?.profile.hasOnboarded) {
       return [];
     }
     
+    // For existing investors, return their specific journey
+    if (user.profile.investorStatus === 'existing') {
+        return getExistingInvestorJourneySteps(t);
+    }
+    
     const { investmentType, businessModel } = user.profile;
 
-    return journeySteps.filter(step => {
+    const allSteps = getJourneySteps(t);
+
+    return allSteps.filter(step => {
       // Step is applicable to all types if applicableTo is not defined
       const typeMatch = !step.applicableTo || step.applicableTo.includes(investmentType);
       
@@ -23,7 +32,7 @@ export const useJourney = () => {
       return typeMatch && businessModelMatch;
     });
 
-  }, [user]);
+  }, [user, t]);
 
   return { journey };
 };

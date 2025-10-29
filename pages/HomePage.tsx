@@ -1,117 +1,235 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AuthModal from '../components/AuthModal';
 import ServiceAssistantModal from '../components/ServiceAssistantModal';
-import InteractiveBackground from '../components/InteractiveBackground';
+import { useLanguage } from '../hooks/useLanguage';
+import { getAboutData } from '../services/about_data';
+import { PracticeArea } from '../types';
+
+const recognitionLogos = [
+  // Using placeholder URLs for demonstration
+  { name: 'Legal 500', url: 'https://images.seeklogo.com/logo-png/30/2/the-legal-500-logo-png_seeklogo-301361.png' },
+  { name: 'Chambers and Partners', url: 'https://assets.chambers.com/logo/chambers_blue_nopadding.svg' },
+  { name: 'IFLR1000', url: 'https://www.iflr1000.com/Content/images/IFLR1000_logo_k.png' },
+  { name: 'Saudi Center for Commercial Arbitration', url: 'https://sadr.org/public/assets/images/sadr-logo-official.png' },
+  { name: 'MISA', url: 'https://misa.gov.sa/app/uploads/2023/11/Ministry_of_Investment_Logo-white.svg' }
+];
+
+const PracticeAreaDisplay: React.FC<{ area: PracticeArea }> = ({ area }) => (
+    <div className="practice-area-details-container glass-card p-8 h-full flex flex-col justify-center items-center text-center" key={area.name}>
+        <div className="practice-area-details-bg"></div>
+        <div className="practice-area-icon flex-shrink-0 w-20 h-20 flex items-center justify-center rounded-full bg-slate-900 border-2 border-slate-700 mb-6">
+            <svg className="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={area.iconPath}></path>
+            </svg>
+        </div>
+        <div className="practice-area-content">
+            <h4 className="font-bold text-slate-100 text-2xl mb-3">{area.name}</h4>
+            <p className="text-slate-300 text-md leading-relaxed max-w-md mx-auto">{area.description}</p>
+        </div>
+    </div>
+);
 
 const HomePage: React.FC = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isAssistantModalOpen, setIsAssistantModalOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const { t, dir } = useLanguage();
+  
+  const { practiceAreas } = useMemo(() => getAboutData(t), [t]);
+  const [activeArea, setActiveArea] = useState<PracticeArea | null>(null);
+  const [hoveredValue, setHoveredValue] = useState<number | null>(null);
+
+  const values = useMemo(() => [
+    {
+      title: t('homePage.values.history.title'),
+      description: t('homePage.values.history.description'),
+      imageUrl: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+      title: t('homePage.values.prompt.title'),
+      description: t('homePage.values.prompt.description'),
+      imageUrl: 'https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+      title: t('homePage.values.expertise.title'),
+      description: t('homePage.values.expertise.description'),
+      imageUrl: 'https://images.pexels.com/photos/1578332/pexels-photo-1578332.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+      title: t('homePage.values.future.title'),
+      description: t('homePage.values.future.description'),
+      imageUrl: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    }
+  ], [t]);
+
+
+  useEffect(() => {
+    if (practiceAreas.length > 0 && !activeArea) {
+      setActiveArea(practiceAreas[0]);
+    }
+  }, [practiceAreas, activeArea]);
+
+  const handleTimeUpdate = (event: React.SyntheticEvent<HTMLVideoElement>) => {
+    const video = event.currentTarget;
+    if (video.currentTime >= 27) {
+        video.currentTime = 0;
+        video.play().catch(error => {
+            console.error("Video loop play failed:", error);
+        });
+    }
+  };
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (videoElement) {
+      const playPromise = videoElement.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          // In React Strict Mode, the component mounts, unmounts, and mounts again.
+          // The unmount can interrupt the play() promise, causing a non-critical AbortError.
+          // We can safely ignore this error.
+          if (error.name !== 'AbortError') {
+            console.error("Initial video play failed:", error);
+          }
+        });
+      }
+    }
+
+    return () => {
+      if (videoElement) {
+        videoElement.pause();
+      }
+    };
+  }, []);
+
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50">
+    <div className="flex flex-col min-h-screen bg-slate-900 text-white">
       <Header onLoginClick={() => setIsAuthModalOpen(true)} />
       
       <main className="flex-grow">
         {/* Hero Section */}
-        <section 
-          className="relative text-center py-20 sm:py-24 lg:py-32"
-          style={{
-            backgroundImage: `url('https://s7g10.scene7.com/is/image/misagovsa/shutterstock_2168796041-2-1?$hero-featured-large-desk$&fit=constrain&fmt=webp')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-          <div className="container mx-auto px-6 relative z-10">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight" style={{ textShadow: '1px 1px 8px rgba(0,0,0,0.7)' }}>
-              بوابتك للاستثمار في المملكة العربية السعودية
-            </h1>
-            <p className="mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-slate-200" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>
-              يقدم مكتب محمد التركي للمحاماة خارطة طريق واضحة ومخصصة لبدء وتنمية أعمالك بكل سهولة وثقة.
-            </p>
-            <div className="mt-8">
-              <button
-                onClick={() => setIsAuthModalOpen(true)}
-                className="px-8 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors duration-300 text-lg font-bold shadow-lg hover:shadow-xl transform hover:scale-105"
-              >
-                ابدأ رحلتك الآن
-              </button>
+        <section className="relative h-[75vh] overflow-hidden">
+          {/* Background Layer */}
+          <div className="absolute inset-0 z-0">
+            <div className="hero-video-container">
+               <video
+                ref={videoRef}
+                src="https://dc23.dcserp.com/files/turky-vid.mp4"
+                autoPlay
+                muted
+                playsInline
+                onTimeUpdate={handleTimeUpdate}
+              />
+            </div>
+            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+          </div>
+        </section>
+
+        {/* Who We Are Section */}
+        <section className="py-20 sm:py-24 lg:py-32 bg-slate-900">
+            <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div className="max-w-md">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">{t('homePage.whoWeAre')}</h2>
+                    <p className="text-slate-300 leading-relaxed mb-6">
+                        {t('homePage.whoWeAreText')}
+                    </p>
+                    <Link to="/about" className="inline-flex items-center font-semibold text-amber-400 hover:text-amber-300 transition-colors group">
+                        {t('homePage.learnMore')}
+                        <svg className={`w-4 h-4 transition-transform group-hover:translate-x-[-4px] ${dir === 'rtl' ? 'mr-2' : 'ml-2'} ${dir === 'rtl' ? 'transform scale-x-[-1]' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </Link>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2070&auto=format&fit=crop" alt="Al-Turki Law Firm Team" className="rounded-lg shadow-2xl" />
+                </div>
+            </div>
+        </section>
+        
+        {/* Core Values Section */}
+        <section className="py-20 sm:py-24 bg-slate-800/20">
+            <div className="container mx-auto px-6">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-white">{t('homePage.ourValues')}</h2>
+                    <p className="mt-3 text-slate-300 max-w-xl mx-auto">
+                        {t('homePage.ourValuesText')}
+                    </p>
+                </div>
+                <div 
+                    className="values-container h-[600px]"
+                    onMouseLeave={() => setHoveredValue(null)}
+                >
+                    {values.map((value, index) => (
+                        <div 
+                            key={index}
+                            className={`value-panel ${hoveredValue === index ? 'expanded' : ''} ${hoveredValue !== null && hoveredValue !== index ? 'collapsed' : ''}`}
+                            onMouseEnter={() => setHoveredValue(index)}
+                            style={{ backgroundImage: `url(${value.imageUrl})` }}
+                        >
+                            <div className="value-panel-content">
+                                <h3>{value.title}</h3>
+                                <p>{value.description}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+
+        {/* Practice Areas Section */}
+        <section className="py-20 sm:py-24 lg:py-32 bg-slate-900">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold text-slate-100">{t('homePage.whatWeDo')}</h2>
+              <p className="mt-3 text-slate-300 max-w-xl mx-auto">
+                {t('homePage.whatWeDoSubtitle')}
+              </p>
+            </div>
+            <div className="max-w-6xl mx-auto glass-card p-6 sm:p-8 rounded-xl">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div className="lg:col-span-1 max-h-[450px] overflow-y-auto space-y-2 lg:pr-4 rtl:lg:pr-0 rtl:lg:pl-4">
+                        {practiceAreas.map(area => (
+                            <button
+                                key={area.name}
+                                onMouseEnter={() => setActiveArea(area)}
+                                className={`w-full p-4 rounded-lg transition-all duration-300 border-l-4 rtl:border-l-0 rtl:border-r-4 ${
+                                    activeArea?.name === area.name 
+                                    ? 'bg-amber-500/10 border-amber-500 text-slate-100' 
+                                    : 'border-transparent text-slate-300 hover:bg-slate-800/50 hover:border-slate-600'
+                                } ${dir === 'rtl' ? 'text-right' : 'text-left'}`}
+                            >
+                               <span className="font-semibold">{area.name}</span>
+                            </button>
+                        ))}
+                    </div>
+                    <div className="lg:col-span-2">
+                        {activeArea && <PracticeAreaDisplay area={activeArea} />}
+                    </div>
+                </div>
             </div>
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden bg-gray-900">
-          <InteractiveBackground className="absolute inset-0 z-0" />
-          <div className="container mx-auto px-6 relative z-10">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold text-white" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.5)' }}>لماذا تختار مكتب محمد التركي للمحاماة؟</h2>
-              <p className="mt-3 text-slate-300 max-w-xl mx-auto" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
-                نحن نبسط الإجراءات الحكومية ونقدم لك الدعم القانوني اللازم لتحقيق النجاح.
-              </p>
+        {/* Recognition Section */}
+        <section className="py-20 sm:py-24 bg-slate-800/20">
+            <div className="container mx-auto px-6">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-white">{t('homePage.recognition')}</h2>
+                    <p className="mt-3 text-slate-300">
+                        {t('homePage.recognitionText')}
+                    </p>
+                </div>
+                <div className="recognition-marquee bg-slate-800 p-8 rounded-lg">
+                    <div className="recognition-track">
+                        {[...recognitionLogos, ...recognitionLogos].map((logo, index) => (
+                            <img key={index} src={logo.url} alt={logo.name} className="recognition-logo" />
+                        ))}
+                    </div>
+                </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Feature 1 */}
-              <div className="feature-card text-center p-8 rounded-xl">
-                <div className="flex items-center justify-center h-16 w-16 mx-auto mb-5">
-                  <div className="w-10 h-10 text-emerald-500">
-                    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" strokeWidth="3">
-                      <circle cx="32" cy="32" r="28" className="opacity-20" />
-                      <path d="M32 6V14M32 58V50M6 32H14M58 32H50" strokeLinecap="round" className="opacity-40"/>
-                      <g className="compass-needle">
-                          <polygon points="32,10 38,32 32,54 26,32" fill="currentColor" stroke="none"/>
-                      </g>
-                      <circle cx="32" cy="32" r="4" fill="#111827" stroke="currentColor" strokeWidth="2"/>
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-slate-100">رحلة مخصصة</h3>
-                <p className="mt-2 text-slate-300">
-                  احصل على خارطة طريق تفاعلية بناءً على نوع استثمارك وقطاعك وحجم رأس مالك.
-                </p>
-              </div>
-              {/* Feature 2 */}
-              <div className="feature-card text-center p-8 rounded-xl">
-                <div className="flex items-center justify-center h-16 w-16 mx-auto mb-5">
-                   <div className="w-10 h-10 text-emerald-500">
-                    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" strokeWidth="3" strokeLinecap="round">
-                        <path d="M32 58V12" className="opacity-50"></path>
-                        <path d="M12 58H52" className="opacity-50"></path>
-                        <g className="scale-beam-group">
-                            <path d="M4 12H60"></path>
-                            <path d="M14 16L24 40"></path>
-                            <path d="M50 16L40 40"></path>
-                            <circle cx="21" cy="40" r="10" strokeWidth="3" fill="currentColor" className="opacity-20" />
-                            <circle cx="43" cy="40" r="10" strokeWidth="3" fill="currentColor" className="opacity-20" />
-                        </g>
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-slate-100">إرشادات واضحة</h3>
-                <p className="mt-2 text-slate-300">
-                  معلومات مفصلة عن كل خطوة، بما في ذلك المستندات المطلوبة والرسوم والمدة الزمنية المتوقعة.
-                </p>
-              </div>
-              {/* Feature 3 */}
-              <div className="feature-card text-center p-8 rounded-xl">
-                <div className="flex items-center justify-center h-16 w-16 mx-auto mb-5">
-                  <div className="w-10 h-10 text-emerald-500 bar-chart-continuous">
-                    <svg viewBox="0 0 64 64" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <rect className="bar bar-1" x="12" y="6" width="10" height="52" rx="2"></rect>
-                        <rect className="bar bar-2" x="27" y="6" width="10" height="52" rx="2"></rect>
-                        <rect className="bar bar-3" x="42" y="6" width="10" height="52" rx="2"></rect>
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-slate-100">تتبع التقدم</h3>
-                <p className="mt-2 text-slate-300">
-                  تابع إنجازك للخطوات بسهولة واعرف دائمًا ما هي خطوتك التالية في رحلتك الاستثمارية.
-                </p>
-              </div>
-            </div>
-          </div>
         </section>
       </main>
 
@@ -126,13 +244,12 @@ const HomePage: React.FC = () => {
       <div className="fixed bottom-8 end-8 z-50">
         <button
             onClick={() => setIsAssistantModalOpen(true)}
-            className="bg-emerald-600 text-white rounded-full p-4 shadow-lg hover:bg-emerald-700 transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
-            aria-label="اسأل المساعد"
+            className="bg-amber-500 text-white rounded-full p-4 shadow-lg hover:bg-amber-600 transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
+            aria-label={t('homePage.askAssistant')}
         >
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
         </button>
       </div>
-
     </div>
   );
 };

@@ -1,4 +1,4 @@
-export type StepStatus = 'لم تبدأ' | 'طور العمل' | 'طور التدقيق' | 'مكتملة';
+export type StepStatusKey = 'completed' | 'in_progress' | 'in_review' | 'not_started';
 
 export interface Service {
   id: string;
@@ -32,6 +32,7 @@ export interface UserDocument {
 }
 
 export interface UserProfile {
+  investorStatus: 'new' | 'existing';
   investmentType: 'foreign' | 'local' | 'gulf';
   legalEntityType: string;
   sector: string;
@@ -59,4 +60,5 @@ export interface PracticeArea {
   name: string;
   description: string;
   iconPath: string;
+  imageUrl: string;
 }

@@ -1,9 +1,11 @@
 import React, { useMemo } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { UserDocument } from '../types';
+import { useLanguage } from '../hooks/useLanguage';
 
 const MyDocumentsPage: React.FC = () => {
   const { user } = useAuth();
+  const { t, language } = useLanguage();
   const documents = user?.documents || [];
 
   const groupedDocuments = useMemo(() => {
@@ -36,17 +38,17 @@ const MyDocumentsPage: React.FC = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-slate-100 mb-2">مستنداتي</h1>
-      <p className="text-slate-300 mb-8">هنا يمكنك العثور على جميع المستندات التي قمت برفعها لكل خدمة.</p>
+      <h1 className="text-3xl font-bold text-slate-100 mb-2">{t('myDocuments.title')}</h1>
+      <p className="text-slate-300 mb-8">{t('myDocuments.subtitle')}</p>
 
       {documents.length === 0 ? (
         <div className="text-center p-12 glass-card rounded-xl mt-10">
           <svg className="mx-auto h-16 w-16 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
           </svg>
-          <h2 className="mt-4 text-xl font-semibold text-slate-200">لا توجد مستندات مرفوعة</h2>
+          <h2 className="mt-4 text-xl font-semibold text-slate-200">{t('myDocuments.noDocuments')}</h2>
           <p className="mt-2 text-slate-400">
-            عند تقديمك للمستندات في صفحة "رحلتي"، ستظهر هنا.
+            {t('myDocuments.noDocumentsDesc')}
           </p>
         </div>
       ) : (
@@ -55,15 +57,14 @@ const MyDocumentsPage: React.FC = () => {
             <div key={serviceName} className="glass-card rounded-xl overflow-hidden">
               <h2 className="px-6 py-4 text-xl font-bold text-slate-100 border-b border-slate-700/50 bg-slate-800/40">{serviceName}</h2>
               <ul className="divide-y divide-slate-700/50">
-                {/* FIX: Cast `docs` to `UserDocument[]` to resolve TypeScript error where `docs` was inferred as `unknown`. */}
                 {(docs as UserDocument[]).map(doc => (
                   <li key={doc.file.name + doc.uploadedAt} className="px-6 py-4 flex items-center justify-between hover:bg-slate-800/40 transition-colors">
-                    <div className="flex items-center space-i-4">
+                    <div className="flex items-center space-x-4 rtl:space-x-reverse">
                       <FileIcon fileType={doc.file.type} />
                       <div className="flex-grow">
                         <p className="font-semibold text-slate-200 truncate">{doc.file.name}</p>
                         <p className="text-sm text-slate-400">
-                          {formatBytes(doc.file.size)} &bull; تاريخ الرفع: {new Date(doc.uploadedAt).toLocaleDateString('ar-SA')}
+                          {formatBytes(doc.file.size)} &bull; {t('myDocuments.uploadDate')}: {new Date(doc.uploadedAt).toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-CA')}
                         </p>
                       </div>
                     </div>

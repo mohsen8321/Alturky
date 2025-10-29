@@ -1,5 +1,5 @@
 {
-  "name": "saudi-investor-navigator",
+  "name": "copy-of-saudi-investor-navigator1-mohsen-again",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,11 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@google/genai": "^1.20.0",
-    "@google/generative-ai": "^0.24.1",
-    "react": "^19.1.1",
+    "react-router-dom": "^7.9.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.9.1"
+    "react": "^19.1.1",
+    "@google/genai": "^1.20.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

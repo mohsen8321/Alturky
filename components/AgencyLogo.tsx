@@ -7,7 +7,8 @@ interface AgencyLogoProps {
 
 const AgencyLogo: React.FC<AgencyLogoProps> = ({ agency, className = 'w-10 h-10 text-gray-500' }) => {
   const getLogo = () => {
-    if (agency.includes('وزارة الاستثمار')) {
+    const lowerAgency = agency.toLowerCase();
+    if (lowerAgency.includes('investment') || lowerAgency.includes('الاستثمار')) {
       // MISA: Building with growth arrow
       return (
         <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -19,7 +20,7 @@ const AgencyLogo: React.FC<AgencyLogoProps> = ({ agency, className = 'w-10 h-10 
         </svg>
       );
     }
-    if (agency.includes('وزارة التجارة')) {
+    if (lowerAgency.includes('commerce') || lowerAgency.includes('التجارة')) {
       // MOC: Scales of justice
       return (
         <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -29,7 +30,7 @@ const AgencyLogo: React.FC<AgencyLogoProps> = ({ agency, className = 'w-10 h-10 
         </svg>
       );
     }
-    if (agency.includes('وزارة الموارد البشرية')) {
+    if (lowerAgency.includes('human resources') || lowerAgency.includes('الموارد البشرية')) {
       // HRSD: People group
       return (
         <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -40,7 +41,7 @@ const AgencyLogo: React.FC<AgencyLogoProps> = ({ agency, className = 'w-10 h-10 
         </svg>
       );
     }
-    if (agency.includes('التأمينات الاجتماعية')) {
+    if (lowerAgency.includes('social insurance') || lowerAgency.includes('التأمينات الاجتماعية')) {
       // GOSI: Shield with checkmark
       return (
         <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -49,7 +50,7 @@ const AgencyLogo: React.FC<AgencyLogoProps> = ({ agency, className = 'w-10 h-10 
         </svg>
       );
     }
-    if (agency.includes('الزكاة والضريبة والجمارك')) {
+    if (lowerAgency.includes('zakat') || lowerAgency.includes('الزكاة')) {
       // ZATCA: Percentage symbol
       return (
          <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -59,7 +60,7 @@ const AgencyLogo: React.FC<AgencyLogoProps> = ({ agency, className = 'w-10 h-10 
         </svg>
       );
     }
-    if (agency.includes('الدفاع المدني')) {
+    if (lowerAgency.includes('civil defense') || lowerAgency.includes('الدفاع المدني')) {
       // Civil Defense: Firefighter helmet
       return (
          <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -69,7 +70,7 @@ const AgencyLogo: React.FC<AgencyLogoProps> = ({ agency, className = 'w-10 h-10 
         </svg>
       );
     }
-     if (agency.includes('وزارة الخارجية')) {
+     if (lowerAgency.includes('foreign affairs') || lowerAgency.includes('وزارة الخارجية')) {
         // MOFA: Globe
         return (
             <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -79,13 +80,24 @@ const AgencyLogo: React.FC<AgencyLogoProps> = ({ agency, className = 'w-10 h-10 
             </svg>
         );
     }
-     if (agency.includes('الملكية الفكرية')) {
+     if (lowerAgency.includes('intellectual property') || lowerAgency.includes('الملكية الفكرية')) {
         // SAIP: Lightbulb
         return (
             <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 18h6M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
             </svg>
         );
+    }
+    if (lowerAgency.includes('legal services') || lowerAgency.includes('خدمات قانونية')) {
+      // Gavel for specialized legal services
+      return (
+         <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20.25 15.75L15 21l-3-3L16.5 13.5l3.75 2.25z"></path>
+            <path d="M15 21L9 15l3-3 6 6z"></path>
+            <path d="M3 21h6"></path>
+            <path d="M11 3.549L9 2.25l-6 6 1.299 2.049a1 1 0 001.299.299l2.451-1.226a1 1 0 011.299.299l2.049 1.299a1 1 0 001.299-.299l1.226-2.451a1 1 0 01.299-1.299L11 3.549z"></path>
+        </svg>
+      );
     }
     
     // Default Logo (Government Building)

@@ -4,9 +4,9 @@ import { User, UserProfile, Service, UserDocument } from '../types';
 interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
-  login: (email: string) => void;
+  login: (email: string, investorStatus: 'new' | 'existing') => void;
   logout: () => void;
-  completeOnboarding: (profileData: Omit<UserProfile, 'hasOnboarded'>) => void;
+  completeOnboarding: (profileData: Omit<UserProfile, 'hasOnboarded' | 'investorStatus'>) => void;
   addDocuments: (files: File[], service: Service) => void;
 }
 
@@ -36,16 +36,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, []);
 
-  const login = (email: string) => {
+  const login = (email: string, investorStatus: 'new' | 'existing') => {
     const newUser: User = {
       email,
       profile: {
+        investorStatus,
         investmentType: 'foreign',
         legalEntityType: '',
         sector: '',
         capital: '500000',
         businessModel: 'Standard',
-        hasOnboarded: false,
+        hasOnboarded: investorStatus === 'existing',
       },
       documents: [],
     };
@@ -58,7 +59,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(null);
   };
   
-  const completeOnboarding = useCallback((profileData: Omit<UserProfile, 'hasOnboarded'>) => {
+  const completeOnboarding = useCallback((profileData: Omit<UserProfile, 'hasOnboarded' | 'investorStatus'>) => {
     setUser(currentUser => {
       if (!currentUser) return null;
       const updatedUser = {

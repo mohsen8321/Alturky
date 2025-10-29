@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import { Service } from '../types';
-import { investorGuideText, alTurkiLawFirmInfoText } from '../services/investor_guide';
+import { alTurkiLawFirmInfoText, alTurkiLawFirmInfoTextEN } from '../services/investor_guide';
+import { useLanguage } from '../hooks/useLanguage';
 
 interface ServiceAssistantModalProps {
   isOpen: boolean;
@@ -20,11 +21,12 @@ const ServiceAssistantModal: React.FC<ServiceAssistantModalProps> = ({ isOpen, o
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const { t, language } = useLanguage();
 
-  const title = service ? `مساعد خدمة: ${service.name}` : 'المساعد الاستثماري';
+  const title = service ? t('assistantModal.title', { serviceName: service.name }) : t('assistantModal.defaultTitle');
   const initialMessage = service
-    ? `أهلاً بك! أنا هنا للإجابة على أسئلتك بخصوص خدمة "${service.name}" بالاعتماد على الأنظمة والقوانين المعتمدة. كيف يمكنني مساعدتك؟`
-    : `أهلاً بك! أنا المساعد الاستثماري لمكتب محمد التركي للمحاماة. كيف يمكنني مساعدتك اليوم في رحلتك الاستثمارية بالمملكة؟`;
+    ? t('assistantModal.initialMessage', { serviceName: service.name })
+    : t('assistantModal.defaultInitialMessage');
 
 
   useEffect(() => {
@@ -58,9 +60,9 @@ const ServiceAssistantModal: React.FC<ServiceAssistantModalProps> = ({ isOpen, o
     setError(null);
 
     try {
-      const ai = new GoogleGenerativeAI(process.env.API_KEY!);
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
       
-      const systemInstruction = `أنت مساعد معرفي لموقع رسمي. وظيفتك هي الاعتماد على الملفات المرفوعة فقط (سياسات، أدلة، عقود، لوائح، عروض، جداول…) للبحث والإجابة.
+      const systemInstruction = language === 'ar' ? `أنت مساعد معرفي لموقع رسمي. وظيفتك هي الاعتماد على الملفات المرفوعة فقط (سياسات، أدلة، عقود، لوائح، عروض، جداول…) للبحث والإجابة.
 ممنوع منعًا باتًا تعديل أو تحديث أي محتوى في الموقع أو الاستنتاج من خارج هذه الملفات.
 أسلوب الإجابة
 نبرة: رسمية، قانونية، استثمارية، تجارية، احترافية ومختصرة.
@@ -96,52 +98,80 @@ const ServiceAssistantModal: React.FC<ServiceAssistantModalProps> = ({ isOpen, o
 مخرجات يجب تجنّبها
 أي تحديث أو إعادة كتابة لمحتوى الموقع.
 أي أحكام قطعية بلا سند من ملف.
-عبارات إنشائية أو تسويقية غير مدعومة من الوثائق.`;
+عبارات إنشائية أو تسويقية غير مدعومة من الوثائق.` 
+      : `You are a knowledge assistant for an official website. Your job is to rely solely on the uploaded files (policies, guides, contracts, regulations, proposals, schedules...) to search and answer.
+It is strictly forbidden to modify or update any content on the site or to infer information from outside these files.
+Answering Style
+Tone: Formal, legal, investment-focused, commercial, professional, and concise.
+Language: English (use Arabic only if the user's question is in Arabic or explicitly requested).
+Structure:
+- A brief executive summary of two to four lines.
+- Organized details with subheadings.
+- Requirements/steps/conditions (if any).
+- A brief legal disclaimer when necessary.
+- Internal references: Mention the file name, title/section, and page or paragraph number if available. Citation format: Source: [File Name] – [Section/Title] – [Page/Paragraph].
+Knowledge and Boundaries
+Rely only on the uploaded files. If you don't find enough information:
+- Say: "Sufficient information is not available in the uploaded files."
+- Suggest what the user needs to provide for more accuracy (document name, chapter, date).
+If there is a conflict between files, present the most recent or most official one (legislation/regulation/contract → takes precedence over a marketing proposal), and state the reason for the preference.
+If the question is outside the scope of the files or requires a binding legal opinion:
+- Provide a general, indicative explanation from the files (if available).
+- Then add a disclaimer: "This answer is informational and does not constitute binding legal advice."
+Do not use general information from the web or examples from outside the documents unless authorized.
+Specific Formatting for Investment/Law/Commerce
+Provide brief definitions of regulatory terms upon first mention (if found in the files).
+When mentioning requirements/procedures: present them as a numbered list, and mention the authority/form/duration if available in the files.
+For numbers and dates: use the exact format as in the files, and mention the effective date if specified.
+If the answer requires a letter template/official text: create a draft based exclusively on the formats in the files and cite the source of the format.
+Behavioral Examples
+If asked: "What are the requirements?"
+- Provide an ordered list of documents/steps with a citation for each point.
+If asked: "Is this allowed?"
+- Cite the regulatory text from the file with the article/paragraph number, then provide a short explanatory summary.
+If the request is outside the files:
+- "There is no reference to this topic in the uploaded files. Please provide me with [document/section name] to complete the answer."
+Outputs to Avoid
+- Any update or rewriting of the website content.
+- Any definitive judgments without a basis from a file.
+- Generic or marketing phrases not supported by the documents.`;
 
       const serviceContext = service ? `
-        السياق الحالي: المستخدم يسأل عن خدمة محددة.
-        - اسم الخدمة الحالية: ${service.name}
-        - الجهة المسؤولة: ${service.agency}
-        - وصف الخدمة: ${service.shortDescription}
-        - المستندات المطلوبة لهذه الخدمة: ${service.documents.join('، ')}
-        - الشروط: ${service.conditions.join('، ')}
+        Current context: The user is asking about a specific service.
+        - Current service name: ${service.name}
+        - Responsible agency: ${service.agency}
+        - Service description: ${service.shortDescription}
+        - Required documents for this service: ${service.documents.join(', ')}
+        - Conditions: ${service.conditions.join(', ')}
       ` : `
-        السياق الحالي: المستخدم يسأل سؤالاً عاماً عن الاستثمار في المملكة العربية السعودية.
+        Current context: The user is asking a general question about investing in Saudi Arabia.
       `;
 
       const userContent = `
-        الوثائق المرجعية:
-        --- بداية معلومات مكتب محمد التركي للمحاماة ---
-        ${alTurkiLawFirmInfoText}
-        --- نهاية معلومات مكتب محمد التركي للمحاماة ---
-
-        --- بداية دليل المستثمر ---
-        ${investorGuideText}
-        --- نهاية دليل المستثمر ---
+        Reference Documents:
+        --- Start of Mohammed Al-Turki Law Firm Information ---
+        ${language === 'ar' ? alTurkiLawFirmInfoText : alTurkiLawFirmInfoTextEN}
+        --- End of Mohammed Al-Turki Law Firm Information ---
         
         ${serviceContext}
-        سؤال المستخدم: "${userInput}"
+        User's question: "${userInput}"
 
-        الرجاء تقديم إجابة بناءً على التعليمات والوثائق المرجعية.
+        Please provide an answer based on the instructions and reference documents.
       `;
       
-      //const model = ai.getGenerativeModel({ model: "gemini-1.5-flash-latest", systemInstruction });
-      //const model = ai.getGenerativeModel({ model: "gemini-2.5-pro", systemInstruction });
-      const model = ai.getGenerativeModel({ model: "gemini-2.5-flash", systemInstruction });
+      const fullPrompt = `${systemInstruction}\n\n${userContent}`;
+      
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: fullPrompt,
+      });
 
-      const chat = model.startChat();
-
-      const result = await chat.sendMessage(userContent);
-      const response = result.response;
-      const text = response.text();
-
-
-      const modelResponse: ChatMessage = { role: 'model', text: text };
+      const modelResponse: ChatMessage = { role: 'model', text: response.text };
       setChatHistory(prev => [...prev, modelResponse]);
 
     } catch (err) {
       console.error("Gemini API error:", err);
-      const errorMessage = "عذراً، حدث خطأ أثناء محاولة الحصول على إجابة. الرجاء المحاولة مرة أخرى.";
+      const errorMessage = t('assistantModal.error');
       setError(errorMessage);
       setChatHistory(prev => [...prev, { role: 'model', text: errorMessage }]);
     } finally {
@@ -178,7 +208,7 @@ const ServiceAssistantModal: React.FC<ServiceAssistantModalProps> = ({ isOpen, o
               <div
                 className={`max-w-xs md:max-w-md lg:max-w-lg px-4 py-3 rounded-2xl shadow-sm ${
                   message.role === 'user'
-                    ? 'bg-emerald-600 text-white rounded-br-lg'
+                    ? 'bg-amber-600 text-white rounded-br-lg'
                     : 'bg-slate-700 text-slate-200 rounded-bl-lg'
                 }`}
               >
@@ -189,7 +219,7 @@ const ServiceAssistantModal: React.FC<ServiceAssistantModalProps> = ({ isOpen, o
           {isLoading && (
              <div className="flex justify-start">
                 <div className="max-w-xs md:max-w-md lg:max-w-lg px-4 py-3 rounded-2xl shadow-sm bg-slate-700">
-                    <div className="flex items-center space-i-2">
+                    <div className="flex items-center space-x-2 rtl:space-x-reverse">
                         <div className="w-2 h-2 bg-slate-400 rounded-full animate-pulse [animation-delay:-0.3s]"></div>
                         <div className="w-2 h-2 bg-slate-400 rounded-full animate-pulse [animation-delay:-0.15s]"></div>
                         <div className="w-2 h-2 bg-slate-400 rounded-full animate-pulse"></div>
@@ -202,23 +232,23 @@ const ServiceAssistantModal: React.FC<ServiceAssistantModalProps> = ({ isOpen, o
         {/* Input Form */}
         <div className="p-4 flex-shrink-0">
           {error && <p className="text-red-400 text-sm text-center mb-2">{error}</p>}
-          <form onSubmit={handleSendMessage} className="flex items-center space-i-3">
+          <form onSubmit={handleSendMessage} className="flex items-center space-x-3 rtl:space-x-reverse">
             <input
               type="text"
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
-              placeholder="اطرح سؤالك هنا..."
+              placeholder={t('assistantModal.inputPlaceholder')}
               className="auth-modal-input flex-1 w-full px-4 py-3 rounded-full shadow-sm"
               disabled={isLoading}
-              aria-label="اطرح سؤالك هنا"
+              aria-label={t('assistantModal.inputPlaceholder')}
             />
             <button
               type="submit"
               disabled={isLoading || !userInput.trim()}
-              className="bg-emerald-600 text-white rounded-full p-3 hover:bg-emerald-700 disabled:bg-slate-600 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-110 shadow-md"
-              aria-label="إرسال"
+              className="bg-amber-600 text-white rounded-full p-3 hover:bg-amber-700 disabled:bg-slate-600 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-110 shadow-md"
+              aria-label={t('assistantModal.send')}
             >
-              <svg className="w-6 h-6 transform -rotate-90" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
+              <svg className={`w-6 h-6 ${language === 'ar' ? 'transform -rotate-90' : 'transform rotate-90'}`} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
             </button>
           </form>
         </div>

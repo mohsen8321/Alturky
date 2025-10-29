@@ -1,117 +1,121 @@
 import { TeamMember, PracticeArea } from '../types';
 
-export const introductionStatement: string = `
-إن قناعتنا الراسخة والقائمة على أساسيات وأخلاقيات مهنة المحاماة تقول بأن المبدأ الأول والطريق السليم هو أن يعمل المحامي وفقاً لقيم ومثل هذه المهنة وأخلاقياتها وكرامتها وشرفها، وأن ينجز واجبه وعمله بإتقان وضمير حي ومسؤولية أخلاقية تامة.
-`;
+type TFunction = (key: string, options?: any) => string;
 
-export const missionStatement: string = `
-في ظل التحولات الاقتصادية العالمية والتطور التقني السريع، نواجه تحديات قطاع الخدمات القانونية بالاعتماد على الاستعمال المكثف للتقنيات الحديثة والمكننة المتسارعة للمهام القانونية، مع فريق من المحامين ذوي الخبرات العالية لتقديم خدمات قانونية مميزة وبأسعار معقولة.
-`;
+export const getAboutData = (t: TFunction) => {
+  const introductionStatement: string = t('aboutUs.introductionStatement');
+  
+  const missionStatement: string = t('aboutUs.missionStatement');
 
-export const teamMembers: TeamMember[] = [
-  {
-    name: 'أ. محمد بن علي التركي',
-    title: 'المؤسس',
-    bio: 'محام ومستشار قانوني سعودي بخبرة تزيد على عقد من الزمان. متخصص في قوانين الأعمال، الاستثمار الأجنبي، وتأسيس الشركات. يتولى إدارة عمليات الدمج والاستحواذ وتصفية الأصول، ولديه خبرة واسعة في إعداد العقود والتفاوض وتمثيل الشركات أمام المحاكم.',
-    imageUrl: 'https://dc23.dcserp.com/files/altorkyPIC.png'
-  },
-  {
-    name: 'سيريل نفاع',
-    title: 'الشريك التنفيذي',
-    bio: 'يتمتع بخبرة تمتد لأكثر من عشرين عاماً في القانون التجاري والتقاضي. متخصص في القانون التجاري، الامتياز التجاري، التوزيع، تقنية المعلومات والقانون البيئي. شغل مناصب مرموقة في شركات عالمية وقاد مكاتب محاماة رائدة في المنطقة.',
-    imageUrl: 'https://dc23.dcserp.com/files/SNPIC.png'
-  }
-];
-
-export const practiceAreas: PracticeArea[] = [
+  const teamMembers: TeamMember[] = [
     {
-        name: 'الأعمال المصرفية',
-        description: 'نقدم استشارات قانونية متعمقة تشمل صياغة ومراجعة كافة العقود المصرفية، بما في ذلك عقود القروض، الاعتمادات المستندية، وخطابات الضمان. يتخصص فريقنا في عقود المرابحة والتمويل الإسلامي، بالإضافة إلى دراسة وصياغة عقود الرهن والقروض المضمونة، مع متابعة إجراءات قيدها وتجديدها وشطبها وفقاً للأنظمة المعمول بها في المملكة.',
-        iconPath: 'M3 6l3 6h12l3-6H3zm18 11V9M12 17V9'
+      name: t('aboutUs.team.turki.name'),
+      title: t('aboutUs.team.turki.title'),
+      bio: t('aboutUs.team.turki.bio'),
+      imageUrl: 'https://dc23.dcserp.com/files/altorkyPIC.png'
     },
     {
-        name: 'الترافع أمام الجهات القضائية',
-        description: 'نتولى تمثيل عملائنا بكل اقتدار أمام جميع المحاكم والجهات القضائية على اختلاف درجاتها. تشمل خبرتنا مجموعة واسعة من الدعاوي، خاصة تلك الناشئة عن الأنشطة التجارية، المنازعات بين الشركاء، قضايا المنافسة غير المشروعة، وقضايا الملكية الفكرية، بالإضافة إلى الدعاوي العقارية والجرائم المعلوماتية، لضمان حماية مصالح عملائنا.',
-        iconPath: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'
-    },
-    {
-        name: 'التحكيم والوساطة',
-        description: 'نظراً لخبراتنا الواسعة في قضايا التحكيم، نقوم بتمثيل عملائنا في حل الخلافات عن طريق الوسائل البديلة لتسوية المنازعات. يشمل ذلك التحكيم والوساطة والمصالحة على المستويين المحلي والدولي، مما يوفر حلاً فعالاً وسريعاً للنزاعات التجارية ويحفظ العلاقات بين الأطراف المتنازعة.',
-        iconPath: 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2m8-10a4 4 0 100-8 4 4 0 000 8zm0 0l-4 4m4-4l4 4'
-    },
-    {
-        name: 'المسائل العمالية والتأمينات',
-        description: 'يتمتع مستشارونا بدراية واسعة بنظام العمل السعودي، مما يمكنهم من تقديم استشارات قانونية شاملة تضمن حقوق عملائنا، سواء كانوا أصحاب عمل أو عمالاً. نقوم بصياغة ومراجعة اللوائح التنظيمية الداخلية للعمل، وتمثيل عملائنا أمام لجان تسوية المنازعات العمالية، وتقديم المشورة فيما يخص نظام التأمينات الاجتماعية.',
-        iconPath: 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2m16-13a4 4 0 11-8 0 4 4 0 018 0z'
-    },
-    {
-        name: 'عقود المشتريات الحكومية',
-        description: 'نقدم المشورة القانونية لعملائنا بشأن كافة جوانب قوانين وأنظمة المناقصات والمشتريات الحكومية. نساعدهم في إعداد وتقديم العروض، التفاوض في العقود بعد الفوز بالمناقصة، ونتولى الدفاع عنهم في القضايا والمنازعات التي قد تنشأ مع الجهات الحكومية أثناء تنفيذ العقود.',
-        iconPath: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
-    },
-    {
-        name: 'الطاقة',
-        description: 'نقدم استشارات قانونية متخصصة وصياغة العقود للشركات العاملة في قطاع الطاقة الحيوي. تشمل خدماتنا مجالات استكشاف، تنقيب، استخراج، وإنتاج واستثمار النفط والغاز، بالإضافة إلى الشركات المصنعة للبتروكيماويات ومقدمي الخدمات المساندة في هذا القطاع الاستراتيجي.',
-        iconPath: 'M13 10V3L4 14h7v7l9-11h-7z'
-    },
-    {
-        name: 'البيئة وإدارة النفايات',
-        description: 'نقوم بصياغة ومراجعة عقود إدارة النفايات بأنواعها المختلفة، سواء كانت صلبة، سائلة، كيميائية، أو طبية. كما نقدم الاستشارات القانونية اللازمة في المسائل البيئية، ونساعد في إبرام العقود بين الشركات والجهات البلدية لجمع ونقل ومعالجة النفايات وفقاً للمعايير البيئية المعتمدة.',
-        iconPath: 'M12 2.69l5.66 5.66a8 8 0 11-11.31 0L12 2.69z'
-    },
-    {
-        name: 'الدعاية والإعلان',
-        description: 'نمثل كبريات الشركات العاملة في أنشطة الدعاية والإعلان، سواء التقليدية أو التي تعتمد على الآليات الرقمية ووسائل التواصل الاجتماعي. نساعد عملاءنا في صياغة عقودهم التجارية، بما في ذلك عقود الرعاية والإعلان وحقوق النشر، واضعين خبرتنا القيمة في هذا المجال بمتناولهم.',
-        iconPath: 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2.586a1 1 0 00-.707.293l-1.414 1.414a1 1 0 01-.707.293h-1.172a1 1 0 01-.707-.293L10 9.414a1 1 0 00-.707-.293H7m12 11v-5m-5.022 5.022L17 17m-5.022-5.022L12 12'
-    },
-    {
-        name: 'الرعاية الصحية',
-        description: 'نقوم بإعداد ومراجعة عقود الاستثمار والرعاية الصحية، بما في ذلك عقود تشغيل المستشفيات، العيادات، الصيدليات، ومراكز التشخيص. كما نقدم الاستشارات المتعلقة بحقوق والتزامات شركات الرعاية الصحية الناشئة عن عقودها، مثل عقود توريد الأجهزة والمعدات الطبية وعقود استخدام الطاقم الطبي.',
-        iconPath: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
-    },
-    {
-        name: 'التأمين',
-        description: 'بفضل خبرتنا النظرية والعملية في قطاع التأمين، نقدم استشارات وخدمات قانونية متكاملة لعملائنا. نقوم بإعداد ومراجعة عقود التأمين بمختلف مجالاتها، كتأمين الممتلكات، التأمين الطبي، تأمين المسؤولية المهنية، ونساعد في الحصول على تراخيص تأسيس شركات التأمين ووسطاء التأمين.',
-        iconPath: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'
-    },
-    {
-        name: 'تقنية المعلومات والاتصالات',
-        description: 'نقدم استشارات قانونية ونتولى صياغة ومراجعة والتفاوض في عقود تقنية المعلومات والاتصالات. تشمل خدماتنا عقود تقديم خدمات القيمة المضافة، توريد المعدات، الصيانة والدعم التقني، وعقود تقديم خدمات الإنترنت وترخيص المحتوى الرقمي، لضمان حماية حقوق عملائنا في هذا القطاع المتطور.',
-        iconPath: 'M5 12h14M12 5l7 7-7 7'
-    },
-    {
-        name: 'خدمات العقار',
-        description: 'نقدم الاستشارات القانونية ونقوم بصياغة العقود اللازمة لعملائنا من رجال الأعمال وشركات الاستثمار والتطوير العقاري. تشمل خدماتنا عمليات البيع، الشراء، الرهن، الإيجار، والاستثمار. كما نراجع عقود المقاولات الإنشائية وفق معايير FIDIC الدولية، ونتولى متابعة الإجراءات القانونية المتعلقة بنزع الملكية.',
-        iconPath: 'M8 20H3V10H2L12 2l10 8h-1v10h-5'
-    },
-    {
-        name: 'الطيران والملاحة الجوية',
-        description: 'نتمتع بخبرة واسعة في مجال الطيران، حيث نمثل عملاءنا في صفقات شراء وبيع الطائرات الخاصة والتجارية. كما نساعد في تأمين التمويل اللازم من البنوك والمؤسسات المالية، ونقدم المشورة القانونية لملاك ومشغلي الطائرات من خلال فريق متخصص يتمتع بخبرة عملية كبيرة في هذا المجال.',
-        iconPath: 'M12 19l9 2-9-18-9 18 9-2zm0 0v-8'
-    },
-    {
-        name: 'حقوق الملكية الفكرية',
-        description: 'يقدم مكتبنا استشارات قانونية متخصصة لحماية حقوق الملكية الفكرية والصناعية. نقوم بإعداد ومراجعة والتفاوض في عقود الترخيص والتنازل عن العلامات التجارية وبراءات الاختراع وحقوق المؤلف. كما نتولى إجراءات التسجيل والتجديد ونقل الملكية، وإيداع طلبات براءات الاختراع.',
-        iconPath: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'
-    },
-    {
-        name: 'تصفية التركات (المواريث)',
-        description: 'نتولى كافة الإجراءات اللازمة لتصفية التركات وإجراء القسمة بين الورثة وتنفيذ الوصايا وفقاً لأحكام المواريث الشرعية. نقوم بصياغة عقود التخارج وفض النزاعات بين الورثة بشكل رضائي أو قضائي، ونتابع إجراءات فرض الحراسة القضائية عند اللزوم لضمان حقوق جميع الأطراف.',
-        iconPath: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M12 14a4 4 0 100-8 4 4 0 000 8zm0 0c1.306 0 2.516.484 3.464 1.258'
+      name: t('aboutUs.team.naffah.name'),
+      title: t('aboutUs.team.naffah.title'),
+      bio: t('aboutUs.team.naffah.bio'),
+      imageUrl: 'https://dc23.dcserp.com/files/SNPIC.png'
     }
-];
+  ];
 
-export const clients: string[] = [
-  'السفارة الإماراتية',
-  'جنرال موتورز',
-  'سيراميك رأس الخيمة',
-  'شركة مجان للطباعة',
-  'أفيردا السعودية',
-  'الجريسي بيت الرياض',
-  'البنك الأهلي المصري',
-  'شركة صاب القابضة',
-  'شركة دالبكو',
-  'شركة سيتاف للاتصالات',
-  'شركة ليمكو (لبنان)',
-  'شركة الدهامي للتجارة',
-];
+  const practiceAreas: PracticeArea[] = [
+    {
+        name: t('aboutUs.practiceAreas.banking.name'),
+        description: t('aboutUs.practiceAreas.banking.description'),
+        iconPath: 'M3 6l3 6h12l3-6H3zm18 11V9M12 17V9',
+        imageUrl: 'https://images.pexels.com/photos/210574/pexels-photo-210574.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.litigation.name'),
+        description: t('aboutUs.practiceAreas.litigation.description'),
+        iconPath: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
+        imageUrl: 'https://images.pexels.com/photos/6077326/pexels-photo-6077326.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.arbitration.name'),
+        description: t('aboutUs.practiceAreas.arbitration.description'),
+        iconPath: 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2m8-10a4 4 0 100-8 4 4 0 000 8zm0 0l-4 4m4-4l4 4',
+        imageUrl: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.labor.name'),
+        description: t('aboutUs.practiceAreas.labor.description'),
+        iconPath: 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2m16-13a4 4 0 11-8 0 4 4 0 018 0z',
+        imageUrl: 'https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.procurement.name'),
+        description: t('aboutUs.practiceAreas.procurement.description'),
+        iconPath: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+        imageUrl: 'https://images.pexels.com/photos/3760069/pexels-photo-3760069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.energy.name'),
+        description: t('aboutUs.practiceAreas.energy.description'),
+        iconPath: 'M13 10V3L4 14h7v7l9-11h-7z',
+        imageUrl: 'https://images.pexels.com/photos/414837/pexels-photo-414837.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.environment.name'),
+        description: t('aboutUs.practiceAreas.environment.description'),
+        iconPath: 'M12 2.69l5.66 5.66a8 8 0 11-11.31 0L12 2.69z',
+        imageUrl: 'https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.media.name'),
+        description: t('aboutUs.practiceAreas.media.description'),
+        iconPath: 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2.586a1 1 0 00-.707.293l-1.414 1.414a1 1 0 01-.707.293h-1.172a1 1 0 01-.707-.293L10 9.414a1 1 0 00-.707-.293H7m12 11v-5m-5.022 5.022L17 17m-5.022-5.022L12 12',
+        imageUrl: 'https://images.pexels.com/photos/7234321/pexels-photo-7234321.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.healthcare.name'),
+        description: t('aboutUs.practiceAreas.healthcare.description'),
+        iconPath: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+        imageUrl: 'https://images.pexels.com/photos/3992933/pexels-photo-3992933.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.insurance.name'),
+        description: t('aboutUs.practiceAreas.insurance.description'),
+        iconPath: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+        imageUrl: 'https://images.pexels.com/photos/5905473/pexels-photo-5905473.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.it.name'),
+        description: t('aboutUs.practiceAreas.it.description'),
+        iconPath: 'M5 12h14M12 5l7 7-7 7',
+        imageUrl: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.realEstate.name'),
+        description: t('aboutUs.practiceAreas.realEstate.description'),
+        iconPath: 'M8 20H3V10H2L12 2l10 8h-1v10h-5',
+        imageUrl: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.aviation.name'),
+        description: t('aboutUs.practiceAreas.aviation.description'),
+        iconPath: 'M12 19l9 2-9-18-9 18 9-2zm0 0v-8',
+        imageUrl: 'https://images.pexels.com/photos/358319/pexels-photo-358319.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.ip.name'),
+        description: t('aboutUs.practiceAreas.ip.description'),
+        iconPath: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z',
+        imageUrl: 'https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    },
+    {
+        name: t('aboutUs.practiceAreas.inheritance.name'),
+        description: t('aboutUs.practiceAreas.inheritance.description'),
+        iconPath: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M12 14a4 4 0 100-8 4 4 0 000 8zm0 0c1.306 0 2.516.484 3.464 1.258',
+        imageUrl: 'https://images.pexels.com/photos/48148/document-agreement-documents-sign-48148.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    }
+  ];
+
+  const clients: string[] = Array.from({ length: 12 }, (_, i) => t(`aboutUs.clients.${i}`));
+
+  return { introductionStatement, missionStatement, teamMembers, practiceAreas, clients };
+};

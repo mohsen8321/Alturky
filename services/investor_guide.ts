@@ -121,6 +121,126 @@ export const alTurkiLawFirmInfoText = `
 هاتف: +٩٦١ ٣ ١٦١١٩
 `;
 
+export const alTurkiLawFirmInfoTextEN = `
+[Information about Mohammed Al-Turki Law Firm]
+
+--- Introduction ---
+Our firm belief, based on the fundamentals and ethics of the legal profession, is that the primary principle and the correct path to practice law and reach its pinnacle is for a lawyer to work according to the values, ideals, ethics, dignity, and honor of this profession. A lawyer should not perform their professional duty solely for financial gain but should complete their work with diligence, a clear conscience, and full ethical responsibility. This is not just for self-satisfaction; the lawyer's role is embodied in serving justice because law is a fundamental pillar of justice and the legal system of any country.
+
+--- Establishment Amidst Major Economic Transformations (Locally and Internationally) ---
+Lawyer Mohammed bin Ali Al-Turki established the firm in 2004, with its main office in Riyadh, the capital of the Kingdom of Saudi Arabia. The firm's lawyers are proficient in Arabic, English, and French and have a deep knowledge of the esteemed Islamic Sharia and civil legal systems. They adopt a practical approach to legal issues presented by the firm's clients. The firm was established under an official license from the Ministry of Justice, number (25/101), and provides legal services under the registered trademark "Mohammed Al-Turki Law Firm for Legal Consultations, Sharia, Law, Arbitration, and Notarization." Due to the complexity of transactions and the growing need for legal, economic, administrative, and financial services, and in light of the significant economic transformations Saudi Arabia has witnessed and continues to witness, the demand for these services has increased.
+
+--- Vision 2020 and 2030 ---
+- The state's direction towards privatizing large service and economic sectors, providing greater investment opportunities for the private sector, which is supported by the state.
+- Saudi Arabia's recent accession to the World Trade Organization.
+- The state's focus on legal development to attract foreign investment.
+- The signing of massive government contracts in the oil and gas sectors with major international companies.
+- The entry of foreign companies into the Saudi market across various economic sectors and commercial activities within the framework of WTO member states.
+- Many banks and insurance companies are adopting various projects and re-evaluating their financial and administrative systems to comply with new regulations, such as capital market laws.
+
+--- Lawyers and Consultants ---
+The firm provides its services through a selection of lawyers, consultants, and experts who possess long and excellent professional experience and high competence in various laws, regulations, and Islamic Sharia. They provide advice and support to their colleagues who litigate in Saudi courts and legal bodies. Additionally, there are professional cooperation agreements with international consulting firms in economic, financial, and administrative fields, intellectual property, and international commercial law, in addition to support services for all these areas, and contracts for communications, energy, insurance, and international contracts in several world languages.
+
+--- The Team ---
+**Mr. Mohammed bin Ali Al-Turki (Founder)**
+Legal consultant, arbitrator, and certified notary. A highly experienced Saudi lawyer and legal consultant with over a decade of experience as a lawyer and certified arbitrator in private practice. He is an advisor on business laws, foreign investment, and legal affairs of foreign companies in Saudi Arabia from their establishment throughout their existence. He also manages mergers and acquisitions, advises on asset and stock liquidation, and the division of estates, and has expertise in drafting and negotiating contracts. He has successfully represented many high-profile Saudi and foreign companies in courts on various matters such as intellectual property, aviation, and shareholder disputes, and has handled countless debt recovery cases on behalf of individual and corporate clients.
+
+**Cyrille Naffah (Managing Partner)**
+Cyrille is the managing partner of The Edge, a law firm established in Beirut (Lebanon). Cyrille has over twenty years of experience in commercial law and litigation. He is a member of the Beirut Bar Association and has practiced law in Lebanon, Saudi Arabia, and the United Arab Emirates. His main areas of expertise are commercial law, franchising, distribution and commercial agencies, advertising, information technology, environmental law, and waste management. Cyrille has held prestigious positions in global companies such as Cisco Systems, SAB International Holding in Saudi Arabia, and recently Averda International Limited.
+
+--- Our Clients ---
+We provide a range of legal services to the business sector through our international allies. Our international services have been enhanced by forming alliances with legal institutions at both local and global levels. The firm has represented many companies, including but not limited to:
+- Legal representative of the UAE Embassy in Saudi Arabia
+- General Motors Limited
+- RAK Ceramics (the world's largest ceramics company)
+- Majan Printing and Packaging (one of the largest packaging companies in the Middle East)
+- Averda Saudi International Limited
+- Jeraisy Riyadh House
+- Jeraisy Computer and Communication Services
+- Omar Ali Balsharaf Co.
+- Al Rajhi Brothers
+- Al Duhami Trading and Contracting
+- Capilux Middle East & Saudi
+- RYMCO (Lebanon)
+- Sitaf Saudi Communications
+- Bait Al-Khibra (Shalfa)
+- SAB Holding International
+- Dalbco Middle East
+- National Bank of Egypt
+- Arab East Investment Technology Company
+As well as a number of estate cases, international and local companies, Royal Highnesses, and businessmen.
+
+--- Our Vision ---
+The legal services sector is witnessing a real revolution driven by the global economic crisis and the rapid development of modern technologies, which have contributed significantly to profound transformations in this sector. All companies, regardless of size and shape—small, medium, and even those on the Fortune 500 list—and their sectors, are currently facing the challenge of meeting their growing legal service needs. On the other hand, modern technologies have radically changed the way lawyers provide legal services and communicate with their clients. Indeed, the ability of computers to process an increasing volume of information at an accelerated pace and automate some legal tasks has meant that a large amount of legal work has become standardized and therefore possible to perform faster and at a much lower cost than before.
+
+--- Areas of Expertise and Services ---
+Since its establishment, the firm has been providing all professional services in the fields of legal consulting, law, arbitration, and notarization of agencies and deeds. The firm has successfully represented its clients before the judiciary by filing lawsuits and pleading on their behalf in all disputes related to various Saudi and international comparative laws and regulations. The firm provides complete and integrated services to its clients, including foreign and national companies and institutions, as well as individuals, in their various activities and businesses.
+
+**Banking:**
+We provide legal advice related to banking and the drafting and review of bank loans, letters of credit, letters of guarantee, all credit contracts, local and foreign Murabaha contracts, and the study and drafting of mortgage and secured loan contracts.
+
+**Litigation:**
+We represent our clients before all courts and judicial bodies at various levels in all types of lawsuits, especially those arising from their commercial activities.
+
+**Arbitration & Mediation:**
+Our firm represents its clients in resolving any dispute that arises between them and other parties through local and international mediation and arbitration, as well as through settlement based on conciliation.
+
+**Labor & Social Insurance:**
+The legal consultants working in our office have extensive knowledge of the labor system, enabling them to provide all legal advice to protect their clients' rights.
+
+**Public Procurement Contracts:**
+Our firm provides legal advice to its clients regarding the provisions of public procurement laws and regulations and assists them in preparing bids for tenders and negotiating contracts with government institutions.
+
+**Energy:**
+We provide legal advice and draft contracts for companies working in the field of oil and gas exploration, drilling, extraction, production, and investment.
+
+**Environment & Waste Management:**
+We draft contracts for the management of solid, liquid, chemical, electronic, and medical waste and its recycling.
+
+**Media & Advertising:**
+We represent some of the largest companies engaged in traditional and modern technology-based advertising activities.
+
+**Health Care:**
+We prepare and review investment and healthcare contracts, and contracts for the operation of hospitals, clinics, pharmacies, and medical diagnostic centers.
+
+**Insurance:**
+We provide legal advice and services at all levels, where we prepare and review insurance contracts.
+
+**Information Technology & Telecoms:**
+We provide legal advice and undertake the tasks of preparing, reviewing, and negotiating information technology and telecommunications contracts.
+
+**Real Estate:**
+We provide legal advice and draft the necessary contracts for our clients from businessmen and real estate investment and development companies.
+
+**Aviation & Aeronautics:**
+We have extensive experience in the field of leasing private and commercial aircraft and helicopters used for medical emergency missions.
+
+**Sports:**
+We draft all contracts related to the sports field, such as contracts for coaches, professional players, marketing and sponsorship contracts, and player transfers.
+
+**Intellectual and Industrial Property:**
+Our firm provides legal advice related to the protection of intellectual and industrial property rights, and prepares, reviews, and negotiates licensing agreements.
+
+**Rules and Regulation:**
+The firm provides proposals and studies to public bodies and government and public administrations to develop and update the regulations governing their work.
+
+**Inheritance Liquidation and Distribution:**
+We handle the procedures for liquidating estates, distributing them among heirs, executing wills, and resolving matters related to missing persons in accordance with the provisions of Islamic inheritance.
+
+**Translation and Proof-reading Services:**
+Our office specializes in translating legal documents in English, French, and Arabic.
+
+--- Contact Us ---
+We always strive to provide you with distinguished legal services. You can contact our offices in Saudi Arabia and Lebanon at the following numbers:
+
+**Saudi Arabia - Riyadh**
+Phone: +966 11 461 2733
+Fax: +966 11 466 0114
+
+**Lebanon - Beirut**
+Phone: +961 3 161119
+`;
+
 export const investorGuideText = `
 [نظام الاستثمار]
 بسم الله الرحمن الرحيم
