@@ -1,6 +1,6 @@
 # ---- Stage 1: Build the React App ----
 # Use an official Node.js runtime as a parent image
-FROM node:18-alpine as builder
+FROM node:20 as builder
 
 # This is the fix: Tell Docker to expect a build-time argument
 ARG VITE_GEMINI_API_KEY
