@@ -3,11 +3,15 @@ import { Link } from 'react-router-dom';
 import { AlTurkiLawLogo } from './AlTurkiLawLogo';
 import { useLanguage } from '../hooks/useLanguage';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  className?: string;
+}
+
+const Footer: React.FC<FooterProps> = ({ className = '' }) => {
   const { t, language } = useLanguage();
 
   return (
-    <footer className="bg-slate-900 text-white border-t border-slate-800">
+    <footer className={`bg-slate-900 text-white border-t border-slate-800 ${className}`}>
       <div className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-right rtl:text-right ltr:text-left">
           
@@ -23,10 +27,11 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-bold mb-4 text-slate-100">{t('footer.quickLinks')}</h3>
             <ul className="space-y-3">
+              <li><Link to="/" className="text-slate-300 hover:text-amber-400 transition">{t('header.home')}</Link></li>
               <li><Link to="/about" className="text-slate-300 hover:text-amber-400 transition">{t('footer.aboutUs')}</Link></li>
-              <li><Link to="/services" className="text-slate-300 hover:text-amber-400 transition">{t('footer.services')}</Link></li>
-              <li><Link to="/journey" className="text-slate-300 hover:text-amber-400 transition">{t('footer.journey')}</Link></li>
+              <li><Link to="/practice-areas" className="text-slate-300 hover:text-amber-400 transition">{t('header.expertise')}</Link></li>
               <li><Link to="/programs" className="text-slate-300 hover:text-amber-400 transition">{t('footer.programs')}</Link></li>
+              <li><Link to="/contact" className="text-slate-300 hover:text-amber-400 transition">{t('footer.contactUs')}</Link></li>
             </ul>
           </div>
 

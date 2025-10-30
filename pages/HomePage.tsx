@@ -17,20 +17,23 @@ const recognitionLogos = [
   { name: 'MISA', url: 'https://misa.gov.sa/app/uploads/2023/11/Ministry_of_Investment_Logo-white.svg' }
 ];
 
-const PracticeAreaDisplay: React.FC<{ area: PracticeArea }> = ({ area }) => (
-    <div className="practice-area-details-container glass-card p-8 h-full flex flex-col justify-center items-center text-center" key={area.name}>
-        <div className="practice-area-details-bg"></div>
-        <div className="practice-area-icon flex-shrink-0 w-20 h-20 flex items-center justify-center rounded-full bg-slate-900 border-2 border-slate-700 mb-6">
-            <svg className="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={area.iconPath}></path>
-            </svg>
-        </div>
-        <div className="practice-area-content">
-            <h4 className="font-bold text-slate-100 text-2xl mb-3">{area.name}</h4>
-            <p className="text-slate-300 text-md leading-relaxed max-w-md mx-auto">{area.description}</p>
-        </div>
+const PracticeAreaDisplay: React.FC<{ area: PracticeArea }> = ({ area }) => {
+  const { dir } = useLanguage();
+  return (
+    <div className="practice-area-details-container glass-card p-8 h-full flex items-center">
+      <img src={area.imageUrl} alt={area.name} className="practice-area-bg-image hidden md:block rounded-lg object-cover w-1/3 h-64 mr-8" />
+      <div className={`practice-area-icon flex-shrink-0 w-20 h-20 flex items-center justify-center rounded-full bg-slate-900 border-2 border-slate-700 ${dir === 'rtl' ? 'ml-8' : 'mr-8'}`}>
+        <svg className="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={area.iconPath}></path>
+        </svg>
+      </div>
+      <div className={`practice-area-content flex-1 ${dir === 'rtl' ? 'text-right' : 'text-left'}`}>
+        <h4 className="font-bold text-slate-100 text-2xl mb-3">{area.name}</h4>
+        <p className="text-slate-300 text-md leading-relaxed">{area.description}</p>
+      </div>
     </div>
-);
+  );
+};
 
 const HomePage: React.FC = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -125,7 +128,6 @@ const HomePage: React.FC = () => {
                 onTimeUpdate={handleTimeUpdate}
               />
             </div>
-            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           </div>
         </section>
 
@@ -180,36 +182,34 @@ const HomePage: React.FC = () => {
 
 
         {/* Practice Areas Section */}
-        <section className="py-20 sm:py-24 lg:py-32 bg-slate-900">
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-100">{t('homePage.whatWeDo')}</h2>
-              <p className="mt-3 text-slate-300 max-w-xl mx-auto">
-                {t('homePage.whatWeDoSubtitle')}
-              </p>
-            </div>
-            <div className="max-w-6xl mx-auto glass-card p-6 sm:p-8 rounded-xl">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-1 max-h-[450px] overflow-y-auto space-y-2 lg:pr-4 rtl:lg:pr-0 rtl:lg:pl-4">
-                        {practiceAreas.map(area => (
-                            <button
-                                key={area.name}
-                                onMouseEnter={() => setActiveArea(area)}
-                                className={`w-full p-4 rounded-lg transition-all duration-300 border-l-4 rtl:border-l-0 rtl:border-r-4 ${
-                                    activeArea?.name === area.name 
-                                    ? 'bg-amber-500/10 border-amber-500 text-slate-100' 
-                                    : 'border-transparent text-slate-300 hover:bg-slate-800/50 hover:border-slate-600'
-                                } ${dir === 'rtl' ? 'text-right' : 'text-left'}`}
-                            >
-                               <span className="font-semibold">{area.name}</span>
-                            </button>
-                        ))}
-                    </div>
-                    <div className="lg:col-span-2">
-                        {activeArea && <PracticeAreaDisplay area={activeArea} />}
-                    </div>
-                </div>
-            </div>
+        <section id="practices">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-100">{t('aboutUs.legalExpertise')}</h2>
+            <p className="mt-3 text-slate-300 max-w-xl mx-auto">
+              {t('aboutUs.legalExpertiseSubtitle')}
+            </p>
+          </div>
+          <div className="max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  <div className="lg:col-span-1 space-y-2 lg:pr-4 rtl:lg:pr-0 rtl:lg:pl-4 max-h-[450px] overflow-y-auto no-scrollbar">
+                      {practiceAreas.map(area => (
+                          <button
+                              key={area.name}
+                              onMouseEnter={() => setActiveArea(area)}
+                              className={`w-full p-4 rounded-lg transition-all duration-300 border-l-4 rtl:border-l-0 rtl:border-r-4 ${
+                                  activeArea?.name === area.name 
+                                  ? 'bg-amber-500/10 border-amber-500 text-slate-100' 
+                                  : 'border-transparent text-slate-300 hover:bg-slate-800/50 hover:border-slate-600'
+                              } ${dir === 'rtl' ? 'text-right' : 'text-left'}`}
+                          >
+                            <span className="font-semibold">{area.name}</span>
+                          </button>
+                      ))}
+                  </div>
+                  <div className="lg:col-span-2">
+                      {activeArea && <PracticeAreaDisplay key={activeArea.name} area={activeArea} />}
+                  </div>
+              </div>
           </div>
         </section>
 

@@ -56,53 +56,20 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick }) => {
     setIsMobileMenuOpen(false);
   }, [location.pathname, location.hash]);
 
-  const headerClasses = `sticky top-0 z-50 text-white transition-all duration-300 ${
+    const headerClasses = `sticky top-0 z-50 text-white transition-all duration-300 ${
     isHomePage && !isScrolled
       ? 'bg-transparent'
-      : 'bg-slate-900/80 backdrop-blur-sm shadow-lg'
-  }`;
-  
-  const aboutSubLinks = [
-    { to: '/about#team', labelKey: 'header.people' },
-    { to: '/about#practices', labelKey: 'header.practices' },
-  ];
-
-  const mainNavLinks = [
-    { to: '/insights', labelKey: 'header.insights' },
-    { to: '/careers', labelKey: 'header.careers' },
+      : 'bg-slate-900/90 backdrop-blur-sm shadow-lg'
+  }`;  const mainNavLinks = [
+    { to: '/', labelKey: 'header.home' },
+    { to: '/about', labelKey: 'header.aboutUs' },
+    { to: '/practice-areas', labelKey: 'header.expertise' },
+    { to: '/about#team', labelKey: 'header.ourTeam' },
     { to: '/contact', labelKey: 'header.contactUs' },
   ];
 
   const NavLinks: React.FC<{ isMobile?: boolean }> = ({ isMobile = false }) => (
     <>
-      <div className={isMobile ? 'w-full' : 'relative'} ref={isMobile ? null : aboutMenuRef}>
-        <Link
-          to="/about"
-          onMouseEnter={!isMobile ? () => setIsAboutMenuOpen(true) : undefined}
-          onMouseLeave={!isMobile ? () => setIsAboutMenuOpen(false) : undefined}
-          className={`px-3 py-2 rounded-md text-sm font-semibold transition-colors flex items-center justify-between ${
-            location.pathname === '/about' ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700 hover:text-white'
-          } ${isMobile ? 'w-full text-lg' : ''}`}
-        >
-          {t('header.aboutUs')}
-          {!isMobile && <svg className={`w-4 h-4 ml-1 transition-transform ${isAboutMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>}
-        </Link>
-        {!isMobile && isAboutMenuOpen && (
-          <div 
-            onMouseEnter={() => setIsAboutMenuOpen(true)}
-            onMouseLeave={() => setIsAboutMenuOpen(false)}
-            className="header-dropdown absolute end-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg z-20 border border-slate-600"
-          >
-            <ul className="py-1">
-              {aboutSubLinks.map(link => (
-                <li key={link.to}>
-                  <Link to={link.to} className="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-700">{t(link.labelKey)}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
       {mainNavLinks.map(link => (
         <Link 
           to={link.to} 

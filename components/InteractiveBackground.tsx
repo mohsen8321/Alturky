@@ -5,115 +5,25 @@ interface InteractiveBackgroundProps {
   theme?: 'light' | 'dark';
 }
 
-// Ultra-detailed KAFD skyline data with programmatic generation for high density
-const generateKafdData = () => {
-    const buildings: { baseX: number, baseY: number, width: number, height: number, lines: {x: number, y: number}[][] }[] = [];
-    
-    // --- PIF Tower (very detailed) ---
-    const pif: any = { baseX: 0.45, baseY: 1.0, width: 0.08, height: 0.92, lines: [] };
-    pif.lines.push([{x: -0.5, y: 0}, {x: -0.5, y: -0.85}], [{x: 0.5, y: 0}, {x: 0.5, y: -0.85}]);
-    pif.lines.push([{x: -0.5, y: -0.85}, {x: 0, y: -1}], [{x: 0.5, y: -0.85}, {x: 0, y: -1}]);
-    for (let i = 0; i <= 85; i++) {
-        const y = -i / 92; 
-        pif.lines.push([{x: -0.5, y: y}, {x: 0.5, y: y}]);
-    }
-    for (let i = 0; i <= 10; i++) {
-        const y_start = -i * 0.08;
-        const y_mid = y_start - 0.04;
-        const y_end = y_start - 0.08;
-        if (y_end >= -1) {
-          pif.lines.push([{x: -0.5, y: y_start}, {x: 0, y: y_mid}], [{x: 0.5, y: y_start}, {x: 0, y: y_mid}]);
-          pif.lines.push([{x: 0, y: y_mid}, {x: -0.5, y: y_end}], [{x: 0, y: y_mid}, {x: 0.5, y: y_end}]);
-        }
-    }
-    buildings.push(pif);
-
-
-    // --- KAFD World Trade Center (Twisted tower, very detailed) ---
-    const wtc: any = { baseX: 0.68, baseY: 1.0, width: 0.1, height: 0.78, lines: [] };
-    wtc.lines.push([{x: -0.5, y: 0}, {x: -0.1, y: -1}], [{x: 0.5, y: 0}, {x: 0.9, y: -1}]);
-    wtc.lines.push([{x: -0.5, y: 0}, {x: 0.9, y: -1}], [{x: 0.5, y: 0}, {x: -0.1, y: -1}]);
-    for (let i = 0; i <= 60; i++) {
-        const progress = i / 60;
-        const twist = 0.5 * Math.sin(progress * Math.PI);
-        wtc.lines.push([{x: -0.5 + twist, y: -progress}, {x: 0.5 + twist, y: -progress}]);
-    }
-    for (let j = 0; j < 5; j++) {
-        const x_start = -0.5 + (j * 0.25);
-        const points = [];
-        for (let i = 0; i <= 60; i++) {
-            const progress = i / 60;
-            const twist = 0.5 * Math.sin(progress * Math.PI);
-            points.push({x: x_start + twist, y: -progress});
-        }
-        for (let i = 0; i < points.length - 1; i++) {
-            wtc.lines.push([points[i], points[i+1]]);
-        }
-    }
-    buildings.push(wtc);
-
-    // --- GCC Bank HQ (Diamond pattern, very detailed) ---
-    const gcc: any = { baseX: 0.15, baseY: 1.0, width: 0.12, height: 0.55, lines: [] };
-    gcc.lines.push([{x: -0.5, y: 0}, {x: -0.5, y: -0.8}], [{x: 0.5, y: 0}, {x: 0.5, y: -0.8}]);
-    gcc.lines.push([{x: -0.5, y: -0.8}, {x: 0, y: -1}], [{x: 0.5, y: -0.8}, {x: 0, y: -1}]);
-    for (let i = 0; i < 30; i++) {
-        gcc.lines.push([{x: -0.5, y: -i * 0.026}, {x: 0.5, y: -i * 0.026}]);
-    }
-    for (let i = -15; i < 15; i++) {
-        gcc.lines.push([{x: -0.5, y: i * 0.08}, {x: 0.5, y: (i * 0.08) - 0.16}]);
-        gcc.lines.push([{x: 0.5, y: i * 0.08}, {x: -0.5, y: (i * 0.08) - 0.16}]);
-    }
-    buildings.push(gcc);
-    
-    // --- Detailed supporting buildings ---
-    const blp: any = { baseX: 0.28, baseY: 1.0, width: 0.11, height: 0.65, lines: [] };
-    blp.lines.push([{x: -0.5, y: 0}, {x: -0.5, y: -1}], [{x: 0.5, y: 0}, {x: 0.5, y: -1}], [{x: -0.5, y: -1}, {x: 0.5, y: -1}]);
-    for(let i=1; i < 50; i++) { blp.lines.push([{x: -0.5, y: -i*0.02}, {x: 0.5, y: -i*0.02}]); }
-    for(let i=1; i < 6; i++) { blp.lines.push([{x: -0.5 + i*0.166, y: 0}, {x: -0.5 + i*0.166, y: -1}]); }
-    buildings.push(blp);
-
-    const brw: any = { baseX: 0.85, baseY: 1.0, width: 0.13, height: 0.68, lines: [] };
-    brw.lines.push([{x: -0.5, y: 0}, {x: -0.5, y: -1}], [{x: 0.5, y: 0}, {x: 0.5, y: -0.8}], [{x: -0.5, y: -1}, {x: 0.5, y: -0.8}]);
-    for(let i=1; i < 55; i++) {
-        const p = i/55;
-        brw.lines.push([{x: -0.5, y: -p}, {x: 0.5, y: -p * 0.8}]);
-    }
-    buildings.push(brw);
-
-    const bfl: any = { baseX: 0.05, baseY: 1.0, width: 0.08, height: 0.4, lines: [] };
-    bfl.lines.push([{x: -0.5, y: 0}, {x: -0.5, y: -1}], [{x: 0.5, y: 0}, {x: 0.5, y: -1}]);
-    for(let i=1; i < 30; i++) { bfl.lines.push([{x: -0.5, y: -i*0.033}, {x: 0.5, y: -i*0.033}]); }
-    buildings.push(bfl);
-
-    const bfr: any = { baseX: 0.95, baseY: 1.0, width: 0.07, height: 0.5, lines: [] };
-    bfr.lines.push([{x: -0.5, y: 0}, {x: -0.2, y: -1}], [{x: 0.5, y: 0}, {x: 0.2, y: -1}], [{x: -0.2, y: -1}, {x: 0.2, y: -1}]);
-    for(let i=1; i < 35; i++) {
-        const p = i/35;
-        bfr.lines.push([{x: -0.5 + p*0.3, y: -p}, {x: 0.5 - p*0.3, y: -p}]);
-    }
-    buildings.push(bfr);
-    
-    return { buildings };
-}
-
-const { buildings: kafdSkylineData } = generateKafdData();
-
-
 const darkThemeColors = {
-    background: '#111827', // gray-900
-    baseLine: (opacity: number) => `rgba(71, 85, 105, ${opacity})`, // slate-600
-    accent: (opacity: number) => `rgba(16, 185, 129, ${opacity})`, // emerald-500
+    background: '#0f172a', // slate-900
+    skyGradientStart: '#1e293b', // slate-800
+    skyGradientEnd: '#0f172a', // slate-900
+    baseLine: (opacity: number) => `rgba(51, 65, 85, ${opacity})`, // slate-700
+    accent: (opacity: number) => `rgba(102, 65, 0, ${opacity})`, // amber-500
+    shootingStar: '#fde68a', // amber-200
 };
 const lightThemeColors = {
-    background: '#f8fafc', // slate-50
-    baseLine: (opacity: number) => `rgba(203, 213, 225, ${opacity})`, // slate-300
-    accent: (opacity: number) => `rgba(5, 150, 105, ${opacity})`, // emerald-600
+    background: '#f1f5f9', // slate-100
+    skyGradientStart: '#e2e8f0', // slate-200
+    skyGradientEnd: '#f1f5f9', // slate-100
+    baseLine: (opacity: number) => `rgba(148, 163, 184, ${opacity})`, // slate-400
+    accent: (opacity: number) => `rgba(217, 119, 6, ${opacity})`, // amber-600
+    shootingStar: '#475569', // slate-600
 };
 
 const InteractiveBackground: React.FC<InteractiveBackgroundProps> = ({ className, theme = 'dark' }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const linesRef = useRef<any[]>([]);
-  const pulsesRef = useRef<any[]>([]);
   const animationFrameId = useRef<number | null>(null);
 
   useEffect(() => {
@@ -123,15 +33,134 @@ const InteractiveBackground: React.FC<InteractiveBackgroundProps> = ({ className
     if (!ctx) return;
 
     const colors = theme === 'light' ? lightThemeColors : darkThemeColors;
-    const mouse = { x: -1000, y: -1000, radius: 150 };
-    const parallax = { current: {x: 0, y: 0}, target: {x: 0, y: 0}, factor: 0.02 };
+    const mouse = { x: -1000, y: -1000, radius: 180 }; // Increased radius for more pronounced glow effect
+    const parallax = { 
+        current: {x: 0, y: 0}, 
+        target: {x: 0, y: 0}, 
+        factor: 0.08, // Increased factor for more noticeable movement
+        smoothing: 0.05 // Controls how smoothly the parallax effect moves
+    };
+    
+    let buildings: any[] = [];
+    let shootingStars: any[] = [];
+
+    const generateBuildings = () => {
+        const buildingData = [
+            // Far background layer (z=0.2)
+            { x: 0.1, h: 0.3, w: 0.05, z: 0.2, details: 2 },
+            { x: 0.18, h: 0.35, w: 0.04, z: 0.2, details: 2 },
+            { x: 0.25, h: 0.4, w: 0.06, z: 0.2, details: 2 },
+            { x: 0.75, h: 0.45, w: 0.05, z: 0.2, details: 2 },
+            { x: 0.82, h: 0.35, w: 0.05, z: 0.2, details: 2 },
+            { x: 0.9, h: 0.25, w: 0.04, z: 0.2, details: 2 },
+            { x: 0.58, h: 0.3, w: 0.05, z: 0.2, details: 2 },
+
+            // Mid-background layer (z=0.5)
+            { x: 0.05, h: 0.4, w: 0.08, z: 0.5, details: 5 },
+            { x: 0.28, h: 0.65, w: 0.11, z: 0.5, details: 8 },
+            { x: 0.85, h: 0.68, w: 0.13, z: 0.5, details: 8 },
+            { x: 0.95, h: 0.5, w: 0.07, z: 0.5, details: 5 },
+            { x: 0.52, h: 0.5, w: 0.06, z: 0.5, details: 6 },
+            { x: 0.38, h: 0.45, w: 0.07, z: 0.5, details: 5 },
+            { x: 0.78, h: 0.6, w: 0.08, z: 0.5, details: 7 },
+
+            // Main layer (z=1.0) - The iconic towers
+            { x: 0.15, h: 0.55, w: 0.12, z: 1.0, details: 10, pattern: 'diamond' }, // GCC Bank
+            { x: 0.45, h: 0.92, w: 0.08, z: 1.0, details: 25, pattern: 'pif' }, // PIF Tower
+            { x: 0.68, h: 0.78, w: 0.1, z: 1.0, details: 15, pattern: 'twist' }, // WTC
+            
+            // Near-foreground layer (z=1.5) - Large and fast moving
+            { x: -0.05, h: 0.3, w: 0.1, z: 1.5, details: 8 },
+            { x: 1.05, h: 0.4, w: 0.12, z: 1.5, details: 10 },
+            { x: 0.3, h: 0.2, w: 0.15, z: 1.5, details: 6 },
+            { x: 0.8, h: 0.25, w: 0.13, z: 1.5, details: 7 },
+        ];
+
+        buildings = buildingData.map(b => {
+            const lines: any[] = [];
+            
+            // Vertical lines are common
+            lines.push({ x1: -0.5, y1: 0, x2: -0.5, y2: -1 });
+            lines.push({ x1: 0.5, y1: 0, x2: 0.5, y2: -1 });
+
+            switch (b.pattern) {
+                case 'pif':
+                    lines.push({ x1: -0.5, y1: -0.85, x2: 0, y2: -1 });
+                    lines.push({ x1: 0.5, y1: -0.85, x2: 0, y2: -1 });
+                    for (let i = 0; i <= b.details * 3; i++) {
+                        const y = -i / (b.details * 3.3);
+                        lines.push({ x1: -0.5, y1: y, x2: 0.5, y2: y });
+                    }
+                    break;
+                case 'twist':
+                    for (let i = 0; i <= b.details * 2; i++) {
+                        const p = i / (b.details*2);
+                        const twist = 0.2 * Math.sin(p * Math.PI * 1.5);
+                        lines.push({ x1: -0.5 + twist, y1: -p, x2: 0.5 + twist, y2: -p });
+                    }
+                    break;
+                case 'diamond':
+                    lines.push({ x1: -0.5, y1: -1, x2: 0.5, y2: -1 });
+                    for (let i = -b.details; i < b.details; i++) {
+                        const yOffset = i * 0.1;
+                        if (yOffset > -1 && yOffset < 0) {
+                            lines.push({ x1: -0.5, y1: yOffset, x2: 0.5, y2: yOffset - 0.2 });
+                            lines.push({ x1: 0.5, y1: yOffset, x2: -0.5, y2: yOffset - 0.2 });
+                        }
+                    }
+                    break;
+                default:
+                     lines.push({ x1: -0.5, y1: -1, x2: 0.5, y2: -1 });
+                     for (let i = 1; i < b.details * 2; i++) {
+                        lines.push({ x1: -0.5, y1: -i / (b.details*2), x2: 0.5, y2: -i / (b.details*2) });
+                    }
+                    break;
+            }
+
+            return { ...b, lines };
+        });
+    };
+    
+    const generateStars = () => {
+        shootingStars = []; // Clear previous stars
+        for(let i = 0; i < 3; i++) {
+            shootingStars.push({
+                x: Math.random() * canvas.width * 2 - canvas.width,
+                y: Math.random() * canvas.height * 0.4,
+                len: Math.random() * 80 + 20,
+                speed: Math.random() * 3 + 2,
+                opacity: Math.random() * 0.5 + 0.5,
+                reset: () => {
+                    const self = shootingStars[i];
+                    self.x = Math.random() * canvas.width * 2 - canvas.width;
+                    self.y = Math.random() * canvas.height * 0.4;
+                }
+            });
+        }
+    };
+
 
     const handleMouseMove = (event: MouseEvent) => {
         const rect = canvas.getBoundingClientRect();
+        
+        // Get mouse position relative to canvas
         mouse.x = event.clientX - rect.left;
         mouse.y = event.clientY - rect.top;
-        parallax.target.x = (mouse.x - canvas.width / 2) * parallax.factor;
-        parallax.target.y = (mouse.y - canvas.height / 2) * parallax.factor;
+        
+        // Calculate parallax offset from center
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        
+        // Enhanced parallax effect with easing
+        const distanceFromCenter = Math.sqrt(
+            Math.pow(mouse.x - centerX, 2) + 
+            Math.pow(mouse.y - centerY, 2)
+        );
+        const maxDistance = Math.sqrt(centerX * centerX + centerY * centerY);
+        const easing = Math.pow(distanceFromCenter / maxDistance, 1.5);
+        
+        parallax.target.x = (mouse.x - centerX) * parallax.factor * easing;
+        parallax.target.y = (mouse.y - centerY) * parallax.factor * easing;
     };
     const handleMouseLeave = () => { 
       mouse.x = -1000; 
@@ -139,39 +168,12 @@ const InteractiveBackground: React.FC<InteractiveBackgroundProps> = ({ className
       parallax.target.x = 0;
       parallax.target.y = 0;
     };
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mouseleave', handleMouseLeave);
-
-    function generateLinesAndPulses() {
-        const w = canvas.width;
-        const h = canvas.height;
-        linesRef.current = [];
-        kafdSkylineData.forEach(shape => {
-            shape.lines.forEach(line => {
-                linesRef.current.push({
-                    x1: shape.baseX * w + line[0].x * shape.width * w * 0.8,
-                    y1: shape.baseY * h + line[0].y * shape.height * h,
-                    x2: shape.baseX * w + line[1].x * shape.width * w * 0.8,
-                    y2: shape.baseY * h + line[1].y * shape.height * h,
-                    opacity: 0,
-                    fadeSpeed: 0.005 + Math.random() * 0.01,
-                    delay: Math.random() * 200,
-                    state: 'fading-in',
-                });
-            });
-        });
-        
-        pulsesRef.current = [];
-        for (let i = 0; i < 50; i++) {
-          pulsesRef.current.push({
-            lineIndex: Math.floor(Math.random() * linesRef.current.length),
-            progress: Math.random(),
-            speed: 0.001 + Math.random() * 0.002,
-            delay: Math.random() * 500,
-          });
-        }
-    }
-
+    // Listen on the window so mouse moves are captured even when the canvas
+    // is visually behind other DOM elements (the main content overlays the canvas).
+    // We keep the canvas pointer-events disabled so it doesn't block UI interactions.
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
+    
     function distToSegmentSquared(p: {x:number, y:number}, v: {x:number, y:number}, w: {x:number, y:number}) {
         const l2 = (v.x - w.x)**2 + (v.y - w.y)**2;
         if (l2 === 0) return (p.x - v.x)**2 + (p.y - v.y)**2;
@@ -180,82 +182,85 @@ const InteractiveBackground: React.FC<InteractiveBackgroundProps> = ({ className
         return (p.x - (v.x + t * (w.x - v.x)))**2 + (p.y - (v.y + t * (w.y - v.y)))**2;
     }
 
+
     function animate() {
       if (!ctx) return;
 
-      parallax.current.x += (parallax.target.x - parallax.current.x) * 0.05;
-      parallax.current.y += (parallax.target.y - parallax.current.y) * 0.05;
+      // Smooth parallax movement
+      parallax.current.x += (parallax.target.x - parallax.current.x) * parallax.smoothing;
+      parallax.current.y += (parallax.target.y - parallax.current.y) * parallax.smoothing;
       
-      ctx.fillStyle = colors.background;
+      // Clear canvas with gradient
+      const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height * 0.7);
+      skyGradient.addColorStop(0, colors.skyGradientStart);
+      skyGradient.addColorStop(1, colors.skyGradientEnd);
+      ctx.fillStyle = skyGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      ctx.save();
-      ctx.translate(parallax.current.x, parallax.current.y);
-
-      linesRef.current.forEach(line => {
-        if (line.delay > 0) {
-          line.delay--;
-        } else {
-          if (line.state === 'fading-in') {
-            line.opacity += line.fadeSpeed;
-            if (line.opacity >= 0.5) { line.opacity = 0.5; line.state = 'visible'; line.delay = 100 + Math.random() * 200; }
-          } else if (line.state === 'fading-out') {
-            line.opacity -= line.fadeSpeed;
-            if (line.opacity <= 0) { line.opacity = 0; line.state = 'hidden'; line.delay = 200 + Math.random() * 300; }
+      // Animate stars
+      shootingStars.forEach(star => {
+          star.x += star.speed;
+          if(star.x - star.len > canvas.width) {
+              star.reset();
           }
-           if(line.delay <= 0) {
-               if (line.state === 'visible') line.state = 'fading-out';
-               else if (line.state === 'hidden') line.state = 'fading-in';
-           }
-        }
-        
-        const distSq = distToSegmentSquared({x: mouse.x - parallax.current.x, y: mouse.y - parallax.current.y}, {x: line.x1, y: line.y1}, {x: line.x2, y: line.y2});
-        let finalOpacity = line.opacity;
-        let finalWidth = 1;
-        let finalColor = colors.baseLine;
-
-        if (distSq < mouse.radius**2) {
-            const mouseFactor = 1 - Math.sqrt(distSq) / mouse.radius;
-            finalOpacity = Math.max(finalOpacity, mouseFactor * 0.9);
-            finalWidth = 1 + mouseFactor * 1.5;
-            finalColor = colors.accent;
-        }
-        
-        if (finalOpacity > 0) {
-            ctx.beginPath();
-            ctx.moveTo(line.x1, line.y1);
-            ctx.lineTo(line.x2, line.y2);
-            ctx.strokeStyle = finalColor(finalOpacity);
-            ctx.lineWidth = finalWidth;
-            ctx.stroke();
-        }
+          ctx.beginPath();
+          const gradient = ctx.createLinearGradient(star.x, star.y, star.x - star.len, star.y);
+          gradient.addColorStop(0, `${colors.shootingStar}`);
+          gradient.addColorStop(1, `rgba(253, 230, 138, 0)`);
+          ctx.strokeStyle = gradient;
+          ctx.lineWidth = 1;
+          ctx.moveTo(star.x, star.y);
+          ctx.lineTo(star.x - star.len, star.y);
+          ctx.stroke();
       });
 
-      pulsesRef.current.forEach(pulse => {
-        if (pulse.delay > 0) {
-            pulse.delay--;
-            return;
-        }
-        
-        pulse.progress += pulse.speed;
-        if (pulse.progress > 1) {
-            pulse.progress = 0;
-            pulse.lineIndex = Math.floor(Math.random() * linesRef.current.length);
-        }
-        
-        const line = linesRef.current[pulse.lineIndex];
-        if (line && line.opacity > 0.1) {
-            const x = line.x1 + (line.x2 - line.x1) * pulse.progress;
-            const y = line.y1 + (line.y2 - line.y1) * pulse.progress;
-            
-            ctx.beginPath();
-            ctx.arc(x, y, 1.5, 0, Math.PI * 2);
-            ctx.fillStyle = colors.accent(0.8);
-            ctx.fill();
-        }
+
+      buildings.sort((a, b) => a.z - b.z).forEach(b => {
+          const w = canvas.width;
+          const h = canvas.height;
+          
+          const buildingParallaxX = parallax.current.x * b.z;
+          const buildingParallaxY = parallax.current.y * b.z;
+          
+          ctx.save();
+          ctx.translate(buildingParallaxX, buildingParallaxY);
+
+          b.lines.forEach((line: any) => {
+              const x1 = b.x * w + line.x1 * b.w * w * 0.8;
+              const y1 = h + line.y1 * b.h * h;
+              const x2 = b.x * w + line.x2 * b.w * w * 0.8;
+              const y2 = h + line.y2 * b.h * h;
+
+              const distSq = distToSegmentSquared({x: mouse.x - buildingParallaxX, y: mouse.y - buildingParallaxY}, {x: x1, y: y1}, {x: x2, y: y2});
+              let finalOpacity = 0.3 * b.z; // Base opacity scaled by depth
+              let finalWidth = 1;
+              let finalColor = colors.baseLine;
+              
+              // Enhanced glow effect
+              if (distSq < mouse.radius**2) {
+                  const distance = Math.sqrt(distSq);
+                  const mouseFactor = Math.pow(1 - distance / mouse.radius, 1.5); // More pronounced falloff
+                  finalOpacity = Math.max(finalOpacity, mouseFactor * 1); // Increased max opacity
+                  finalWidth = 1 + mouseFactor * 2; // More pronounced width variation
+                  finalColor = colors.accent;
+                  
+                  // Add subtle pulse effect based on time
+                  const pulse = Math.sin(Date.now() * 0.005) * 0.1 + 0.9;
+                  finalOpacity *= pulse;
+              }
+              
+              if (finalOpacity > 0) {
+                  ctx.beginPath();
+                  ctx.moveTo(x1, y1);
+                  ctx.lineTo(x2, y2);
+                  ctx.strokeStyle = finalColor(finalOpacity);
+                  ctx.lineWidth = finalWidth;
+                  ctx.stroke();
+              }
+          });
+          ctx.restore();
       });
       
-      ctx.restore();
       animationFrameId.current = requestAnimationFrame(animate);
     }
     
@@ -264,7 +269,8 @@ const InteractiveBackground: React.FC<InteractiveBackgroundProps> = ({ className
         const { width, height } = entry.contentRect;
         canvas.width = width;
         canvas.height = height;
-        generateLinesAndPulses();
+        generateBuildings();
+        generateStars();
       }
     });
 
@@ -273,20 +279,23 @@ const InteractiveBackground: React.FC<InteractiveBackgroundProps> = ({ className
         const parent = canvas.parentElement;
         canvas.width = parent.clientWidth;
         canvas.height = parent.clientHeight;
-        generateLinesAndPulses();
+        generateBuildings();
+        generateStars();
         animate();
     }
 
-    return () => {
-      if(animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
-      resizeObserver.disconnect();
-      canvas.removeEventListener('mousemove', handleMouseMove);
-      canvas.removeEventListener('mouseleave', handleMouseLeave);
-    };
+        return () => {
+            if(animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
+            resizeObserver.disconnect();
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseleave', handleMouseLeave);
+        };
   }, [theme]);
 
-  const bgColor = theme === 'light' ? lightThemeColors.background : darkThemeColors.background;
-  return <canvas ref={canvasRef} className={className} style={{ backgroundColor: bgColor }} />;
+    const bgColor = theme === 'light' ? lightThemeColors.background : darkThemeColors.background;
+    // Make canvas ignore pointer events so it doesn't block page interactions;
+    // we still capture mouse position via window listeners above.
+    return <canvas ref={canvasRef} className={className} style={{ backgroundColor: bgColor, pointerEvents: 'none' }} />;
 };
 
 export default InteractiveBackground;

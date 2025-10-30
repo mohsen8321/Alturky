@@ -6,11 +6,13 @@ const en = {
     programs: 'Programs',
     myDocuments: 'My Documents',
     aboutUs: 'About Us',
+    ourTeam: 'Our Team',
     home: 'Home',
     login: 'Login',
     logout: 'Logout',
     people: 'People',
     practices: 'Practices',
+    expertise: 'Our Expertise',
     insights: 'Insights',
     careers: 'Careers',
     contactUs: 'Contact Us',
@@ -506,6 +508,11 @@ const en = {
     subtitle: 'We are here to help. Contact our offices in Riyadh and Beirut for a consultation.',
     phone: 'Phone',
   },
+  practiceAreasPage: {
+    title: 'Our Fields of Legal Expertise',
+    subtitle: 'We provide integrated solutions in various fields of law and consultancy in compliance with Saudi and international regulations.',
+    requestConsultation: 'Request Consultation',
+  },  
 };
 
 export default en;

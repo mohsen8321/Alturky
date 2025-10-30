@@ -11,9 +11,8 @@ import MyDocumentsPage from './pages/MyDocumentsPage';
 import AboutUsPage from './pages/AboutUsPage';
 import AppLayout from './components/AppLayout';
 import OnboardingLayout from './components/OnboardingLayout';
-import InsightsPage from './pages/InsightsPage';
-import CareersPage from './pages/CareersPage';
 import ContactPage from './pages/ContactPage';
+import PracticeAreasPage from './pages/PracticeAreasPage';
 
 
 interface ProtectedRouteProps {
@@ -89,26 +88,18 @@ const App: React.FC = () => {
               } 
             />
             <Route 
-              path="/insights" 
-              element={
-                <AppLayout>
-                  <InsightsPage />
-                </AppLayout>
-              } 
-            />
-            <Route 
-              path="/careers" 
-              element={
-                <AppLayout>
-                  <CareersPage />
-                </AppLayout>
-              } 
-            />
-             <Route 
               path="/contact" 
               element={
                 <AppLayout>
                   <ContactPage />
+                </AppLayout>
+              } 
+            />
+            <Route 
+              path="/practice-areas" 
+              element={
+                <AppLayout>
+                  <PracticeAreasPage />
                 </AppLayout>
               } 
             />

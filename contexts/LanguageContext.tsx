@@ -21,7 +21,7 @@ const getNestedValue = (obj: any, key: string): string => {
 };
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('ar');
+  const [language, setLanguage] = useState<Language>('en');
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language') as Language;

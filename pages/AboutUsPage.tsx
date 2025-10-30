@@ -122,38 +122,6 @@ const AboutUsPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Practice Areas Section */}
-      <section id="practices">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-100">{t('aboutUs.legalExpertise')}</h2>
-          <p className="mt-3 text-slate-300 max-w-xl mx-auto">
-            {t('aboutUs.legalExpertiseSubtitle')}
-          </p>
-        </div>
-        <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-1 space-y-2 lg:pr-4 rtl:lg:pr-0 rtl:lg:pl-4 max-h-[450px] overflow-y-auto no-scrollbar">
-                    {practiceAreas.map(area => (
-                        <button
-                            key={area.name}
-                            onMouseEnter={() => setActiveArea(area)}
-                            className={`w-full p-4 rounded-lg transition-all duration-300 border-l-4 rtl:border-l-0 rtl:border-r-4 ${
-                                activeArea?.name === area.name 
-                                ? 'bg-amber-500/10 border-amber-500 text-slate-100' 
-                                : 'border-transparent text-slate-300 hover:bg-slate-800/50 hover:border-slate-600'
-                            } ${dir === 'rtl' ? 'text-right' : 'text-left'}`}
-                        >
-                           <span className="font-semibold">{area.name}</span>
-                        </button>
-                    ))}
-                </div>
-                <div className="lg:col-span-2">
-                    {activeArea && <PracticeAreaDisplay key={activeArea.name} area={activeArea} />}
-                </div>
-            </div>
-        </div>
-      </section>
-
       {/* Clients Section */}
       <section ref={clientsSectionRef}>
         <div className="text-center mb-12">
