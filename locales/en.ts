@@ -169,7 +169,7 @@ const en = {
       turki: {
         name: 'Mr. Mohammed bin Ali Al-Turki',
         title: 'Founder',
-        bio: 'A Saudi lawyer and legal consultant with over a decade of experience. Specializing in business law, foreign investment, and company formation. He manages mergers, acquisitions, and asset liquidations, and has extensive experience in drafting contracts, negotiation, and corporate representation in court.',
+        bio: 'A Saudi lawyer and legal consultant with over 30 years of experience. Specializing in business law, foreign investment, and company formation. He manages mergers, acquisitions, and asset liquidations, and has extensive experience in drafting contracts, negotiation, and corporate representation in court.',
       },
       naffah: {
         name: 'Cyrille Naffah',

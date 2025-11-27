@@ -145,7 +145,7 @@ const HomePage: React.FC = () => {
                     </Link>
                 </div>
                 <div>
-                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2070&auto=format&fit=crop" alt="Al-Turki Law Firm Team" className="rounded-lg shadow-2xl" />
+                    <img src="https://dc23.dcserp.com/files/Team.png" alt="Al-Turki Law Firm Team" className="rounded-lg shadow-2xl" />
                 </div>
             </div>
         </section>
