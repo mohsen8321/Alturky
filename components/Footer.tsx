@@ -29,6 +29,7 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
             <ul className="space-y-3">
               <li><Link to="/" className="text-slate-300 hover:text-amber-400 transition">{t('header.home')}</Link></li>
               <li><Link to="/about" className="text-slate-300 hover:text-amber-400 transition">{t('footer.aboutUs')}</Link></li>
+              <li><Link to="/our-partners" className="text-slate-300 hover:text-amber-400 transition">{t('header.ourPartners')}</Link></li>
               <li><Link to="/practice-areas" className="text-slate-300 hover:text-amber-400 transition">{t('header.expertise')}</Link></li>
               <li><Link to="/programs" className="text-slate-300 hover:text-amber-400 transition">{t('footer.programs')}</Link></li>
               <li><Link to="/contact" className="text-slate-300 hover:text-amber-400 transition">{t('footer.contactUs')}</Link></li>

@@ -6,6 +6,7 @@ const ar = {
     programs: 'البرامج',
     myDocuments: 'مستنداتي',
     aboutUs: 'من نحن',
+    ourPartners: 'شركاؤنا',
     ourTeam: 'فريق الخبراء',
     home: 'الرئيسية',
     login: 'تسجيل الدخول',

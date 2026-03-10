@@ -6,6 +6,7 @@ const en = {
     programs: 'Programs',
     myDocuments: 'My Documents',
     aboutUs: 'About Us',
+    ourPartners: 'Our Partners',
     ourTeam: 'Our Team',
     home: 'Home',
     login: 'Login',

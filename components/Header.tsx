@@ -64,6 +64,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick }) => {
     { to: '/', labelKey: 'header.home' },
     { to: '/about', labelKey: 'header.aboutUs' },
     { to: '/practice-areas', labelKey: 'header.expertise' },
+    { to: '/our-partners', labelKey: 'header.ourPartners' },
     { to: '/about#team', labelKey: 'header.ourTeam' },
     { to: '/contact', labelKey: 'header.contactUs' },
   ];

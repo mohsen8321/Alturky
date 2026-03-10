@@ -15,7 +15,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     useScrollToHash();
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     
-    const darkThemeRoutes = ['/journey', '/services', '/programs', '/documents', '/about', '/practice-areas', '/contact'];
+    const darkThemeRoutes = ['/journey', '/services', '/programs', '/documents', '/about', '/our-partners', '/practice-areas', '/contact'];
     const useDarkTheme = darkThemeRoutes.some(path => location.pathname.startsWith(path));
 
     const handleLoginClick = () => {

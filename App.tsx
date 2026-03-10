@@ -9,6 +9,7 @@ import ServicesPage from './pages/ServicesPage';
 import ProgramsPage from './pages/ProgramsPage';
 import MyDocumentsPage from './pages/MyDocumentsPage';
 import AboutUsPage from './pages/AboutUsPage';
+import OurPartnersPage from './pages/OurPartnersPage';
 import AppLayout from './components/AppLayout';
 import OnboardingLayout from './components/OnboardingLayout';
 import ContactPage from './pages/ContactPage';
@@ -100,6 +101,14 @@ const App: React.FC = () => {
               element={
                 <AppLayout>
                   <PracticeAreasPage />
+                </AppLayout>
+              } 
+            />
+            <Route 
+              path="/our-partners" 
+              element={
+                <AppLayout>
+                  <OurPartnersPage />
                 </AppLayout>
               } 
             />
