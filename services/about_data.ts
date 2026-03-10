@@ -1,4 +1,6 @@
-import { TeamMember, PracticeArea } from '../types';
+import { TeamMember, PracticeArea, Partner } from '../types';
+import enLocale from '../locales/en';
+import arLocale from '../locales/ar';
 
 type TFunction = (key: string, options?: any) => string;
 
@@ -115,7 +117,8 @@ export const getAboutData = (t: TFunction) => {
     }
   ];
 
-  const clients: string[] = Array.from({ length: 12 }, (_, i) => t(`aboutUs.clients.${i}`));
+  // Get clients/partners - will be handled in the component based on language
+  const clients: Partner[] = [];
 
   return { introductionStatement, missionStatement, teamMembers, practiceAreas, clients };
 };

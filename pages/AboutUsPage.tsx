@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getAboutData } from '../services/about_data';
-import { TeamMember, PracticeArea } from '../types';
+import { TeamMember, PracticeArea, Partner } from '../types';
 import { useLanguage } from '../hooks/useLanguage';
+import enLocale from '../locales/en';
+import arLocale from '../locales/ar';
 
 const TeamMemberCard: React.FC<{ member: TeamMember }> = ({ member }) => (
   <div className="glass-card rounded-xl overflow-hidden text-center h-full">
@@ -33,14 +35,97 @@ const PracticeAreaDisplay: React.FC<{ area: PracticeArea }> = ({ area }) => {
     );
 };
 
+const PartnerCard: React.FC<{ partner: Partner }> = ({ partner }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState<'top' | 'bottom'>('bottom');
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
+        setShowTooltip(false);
+      }
+    };
+
+    if (showTooltip) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showTooltip]);
+
+  const handleMouseEnter = () => {
+    if (cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const spaceBelow = viewportHeight - rect.bottom;
+      
+      // If less than 350px space below, show tooltip above
+      if (spaceBelow < 350) {
+        setTooltipPosition('top');
+      } else {
+        setTooltipPosition('bottom');
+      }
+    }
+    setShowTooltip(true);
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      className="relative group"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={() => setShowTooltip(false)}
+    >
+      <div className="client-card client-card-interactive glass-card text-center py-6 px-4 cursor-pointer hover:border-amber-400 transition-colors">
+        <p className="text-slate-200 font-semibold text-sm sm:text-base">{partner.name}</p>
+        <p className="text-amber-400 text-xs mt-2">{partner.industry}</p>
+      </div>
+
+      {/* Tooltip/Popup */}
+      {showTooltip && (
+        <div 
+          ref={tooltipRef}
+          className={`absolute z-[100] left-1/2 transform -translate-x-1/2 w-72 bg-slate-900 border-2 border-amber-400/50 rounded-lg p-4 shadow-2xl animate-fade-in-down ${
+            tooltipPosition === 'top' ? 'bottom-full mb-2' : 'top-full mt-2'
+          }`}
+        >
+          <div className="flex justify-between items-start mb-2">
+            <p className="text-amber-400 font-semibold text-sm">Work Done</p>
+            <button
+              onClick={() => setShowTooltip(false)}
+              className="text-slate-400 hover:text-slate-200 text-lg leading-none"
+            >
+              ×
+            </button>
+          </div>
+          <p className="text-slate-200 text-sm leading-relaxed">{partner.workDone}</p>
+          <div className="mt-2 text-xs text-slate-400">
+            <p><strong>Industry:</strong> {partner.industry}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 
 const AboutUsPage: React.FC = () => {
-  const { t, dir } = useLanguage();
-  const { introductionStatement, missionStatement, teamMembers, practiceAreas, clients } = useMemo(() => getAboutData(t), [t]);
+  const { t, dir, language } = useLanguage();
+  const { introductionStatement, missionStatement, teamMembers, practiceAreas } = useMemo(() => getAboutData(t), [t]);
   const location = useLocation();
   
   const [activeArea, setActiveArea] = useState<PracticeArea | null>(null);
   const clientsSectionRef = useRef<HTMLDivElement>(null);
+
+  // Get partners based on current language
+  const partners: Partner[] = useMemo(() => {
+    const locale = language === 'ar' ? arLocale : enLocale;
+    return (locale.aboutUs.clients as Partner[]) || [];
+  }, [language]);
   
   useEffect(() => {
     if (practiceAreas.length > 0 && !activeArea) {
@@ -130,11 +215,9 @@ const AboutUsPage: React.FC = () => {
             {t('aboutUs.successPartnersSubtitle')}
           </p>
         </div>
-        <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-            {clients.map((client, index) => (
-                <div key={index} className="client-card client-card-interactive glass-card text-center py-6 px-4">
-                    <p className="text-slate-200 font-semibold text-lg">{client}</p>
-                </div>
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {partners.map((partner, index) => (
+                <PartnerCard key={index} partner={partner} />
             ))}
         </div>
       </section>

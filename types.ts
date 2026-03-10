@@ -62,3 +62,9 @@ export interface PracticeArea {
   iconPath: string;
   imageUrl: string;
 }
+
+export interface Partner {
+  name: string;
+  industry: string;
+  workDone: string;
+}
