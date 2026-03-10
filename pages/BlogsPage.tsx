@@ -21,7 +21,9 @@ const BlogCard: React.FC<{ post: BlogPost; featured?: boolean; readMoreLabel: st
         <span>{post.readTime}</span>
       </div>
       <h2 className={`font-bold text-slate-100 ${featured ? 'text-3xl sm:text-4xl' : 'text-2xl'}`}>{post.title}</h2>
-      <p className="mt-4 flex-grow leading-relaxed text-slate-300">{post.excerpt}</p>
+      <p className={`mt-4 leading-relaxed text-slate-300 ${featured ? 'flex-grow' : ''}`}>
+        {featured ? post.excerpt : `${post.excerpt.slice(0, 170)}${post.excerpt.length > 170 ? '...' : ''}`}
+      </p>
       <div className="mt-6 flex items-center justify-between border-t border-slate-700/70 pt-4">
         <p className="text-sm text-slate-400">{post.author}</p>
         <span className="text-sm font-semibold text-amber-400">{readMoreLabel}</span>

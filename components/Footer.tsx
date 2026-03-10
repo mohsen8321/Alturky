@@ -97,7 +97,23 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
 
         </div>
         <div className="mt-12 border-t border-slate-800 pt-8 text-center text-sm text-slate-400">
-          <p className="cursor-pointer select-none" onClick={_h}>&copy; {new Date().getFullYear()} {t('footer.copyright')}</p>
+          <p>
+            <span className="cursor-pointer select-none" onClick={_h}>
+              &copy; {new Date().getFullYear()} {t('footer.copyright')}
+            </span>
+            <span className="mx-2">|</span>
+            <span>
+              Powered By:{' '}
+              <a
+                href="https://digitalconnexion.net/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-slate-300 hover:text-amber-400 transition"
+              >
+                Digital Connexion
+              </a>
+            </span>
+          </p>
           <div id="_x" className="mt-2"></div>
         </div>
       </div>
