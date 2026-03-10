@@ -49,6 +49,7 @@ const AboutUsPage: React.FC = () => {
   
   useEffect(() => {
     if (location.hash) {
+      // Keep anchor navigation smooth when arriving from header/footer links.
       const id = location.hash.substring(1); // remove #
       setTimeout(() => {
         const element = document.getElementById(id);
