@@ -68,3 +68,22 @@ export interface Partner {
   industry: string;
   workDone: string;
 }
+
+export interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  publishedAt: string;
+  readTime: string;
+  author: string;
+  imageUrl: string;
+  content: string[];
+  sections?: {
+    heading?: string;
+    paragraphs?: string[];
+    bullets?: string[];
+  }[];
+  disclaimer?: string;
+}

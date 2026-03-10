@@ -14,7 +14,7 @@ const en = {
     people: 'People',
     practices: 'Practices',
     expertise: 'Our Expertise',
-    insights: 'Insights',
+    blogs: 'Blogs',
     careers: 'Careers',
     contactUs: 'Contact Us',
   },
@@ -555,9 +555,57 @@ const en = {
         description: 'Supports innovative and research projects that contribute to technology transfer and localization, offering financial grants and facilities to companies investing in R&D.',
     }
   },
-  insightsPage: {
-    title: 'Insights & Articles',
-    subtitle: 'Coming Soon: In-depth legal and investment analysis from our experts.',
+  blogsPage: {
+    eyebrow: 'Articles & Updates',
+    title: 'Blogs',
+    subtitle: 'Short legal and investment reads designed to help founders, investors, and operators navigate the Saudi market with more confidence.',
+    latestTitle: 'Latest Posts',
+    latestSubtitle: 'A simple preview grid for your upcoming blog content.',
+    readMore: 'Read full article',
+    backToBlogs: 'Back to Blogs',
+    notFoundTitle: 'Blog Post Not Found',
+    notFoundSubtitle: 'The article you are looking for is not available or may have been moved.',
+    posts: {
+      marketEntry: {
+        title: 'What Foreign Investors Should Prepare Before Entering Saudi Arabia',
+        excerpt: 'A practical overview of the early legal, licensing, and structuring decisions that usually shape the speed and cost of a successful market entry into the Kingdom.',
+        category: 'Market Entry',
+        publishedAt: 'March 2026',
+        readTime: '6 min read',
+        author: 'Mohammed Al-Turki Law Firm',
+        content: [
+          'Entering Saudi Arabia successfully starts with sequencing: many companies lose time by preparing legal documents before confirming business activity scope, ownership structure, and regulator path. A practical pre-entry checklist should align business goals with licensing realities from day one.',
+          'Founders should define whether they need a pure commercial setup, a professional services vehicle, or a structure that supports procurement-heavy projects. This decision affects approval routes, capital expectations, shareholder documentation, and future operational flexibility.',
+          'The fastest market entries are usually built around clean governance documents, realistic activity mapping, and early compliance planning for labor, tax, and reporting obligations. Legal readiness is not just about incorporation; it is about operating smoothly after day one.'
+        ]
+      },
+      rhq: {
+        title: 'When an RHQ Structure Makes Sense for Regional Expansion',
+        excerpt: 'Regional headquarters setups can unlock strategic and regulatory advantages, but only when the operating model, hiring plan, and compliance obligations are mapped correctly from the start.',
+        category: 'RHQ Strategy',
+        publishedAt: 'March 2026',
+        readTime: '5 min read',
+        author: 'Mohammed Al-Turki Law Firm',
+        content: [
+          'An RHQ model can be a strong strategic move for groups coordinating Gulf operations from Saudi Arabia, but only if decision-making authority, management presence, and operational substance are real and documented. A paper-only setup often creates compliance friction later.',
+          'Before launch, companies should design the RHQ mandate carefully: what decisions are centralized, which contracts are signed in the Kingdom, and how support functions are allocated across entities. These points drive licensing, tax, and employment outcomes.',
+          'When structured correctly, RHQ entities can improve regional governance and strengthen market credibility. The key is to align legal form, executive staffing, and reporting practices with the business model from the beginning.'
+        ]
+      },
+      compliance: {
+        title: 'Three Compliance Mistakes That Slow Down Commercial Operations',
+        excerpt: 'From mismatched activities on the commercial registration to overlooked labor and tax requirements, small compliance gaps can create expensive delays if they are not fixed early.',
+        category: 'Compliance',
+        publishedAt: 'March 2026',
+        readTime: '4 min read',
+        author: 'Mohammed Al-Turki Law Firm',
+        content: [
+          'The first common issue is activity mismatch: many businesses start operations that do not fully match the activities listed in their registration documents. This gap can block contracting, payment processing, and license renewals when counterparties or regulators perform checks.',
+          'The second issue is delayed labor setup. Incomplete onboarding with labor and social insurance platforms can delay hiring and payroll, and eventually trigger penalties. Compliance should be treated as an operational launch task, not a post-launch cleanup task.',
+          'The third issue is tax and reporting discipline. Even companies with healthy revenues can face avoidable disruption when filing cycles, invoicing practices, or internal document controls are weak. A simple monthly compliance calendar significantly reduces these risks.'
+        ]
+      }
+    }
   },
   careersPage: {
     title: 'Careers',
