@@ -84,7 +84,7 @@ const AboutUsPage: React.FC = () => {
 
 
       {/* Team Section */}
-      <section id="team">
+      <section id="team" className="scroll-mt-40">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-100">{t('aboutUs.ourTeam')}</h2>
           <p className="mt-3 text-slate-300 max-w-xl mx-auto">
